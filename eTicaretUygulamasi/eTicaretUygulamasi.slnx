@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Admin/Admin.csproj" Id="c5218406-6102-4498-a447-fbef8f5aeb7e" />
   <Project Path="eTicaretUygulamasi.Mvc/eTicaretUygulamasi.Mvc.csproj" />
 </Solution>
