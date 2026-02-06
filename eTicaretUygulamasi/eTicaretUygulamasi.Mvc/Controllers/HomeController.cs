@@ -28,5 +28,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //github kontrol
     }
 }
