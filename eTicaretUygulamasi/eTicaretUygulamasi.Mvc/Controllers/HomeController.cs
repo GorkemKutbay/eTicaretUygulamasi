@@ -6,7 +6,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        static private List<string> _sehirler = new List<string>() { "Ankara", "İstanbul", "İzmir" };
+       
 
         private readonly ILogger<HomeController> _logger;
 
