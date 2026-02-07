@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eTicaretUygulamasi.Mvc")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18690c7f6dd2307ce36043e1855b122b6be489d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36244f5fdf0719beaa60cd50ac2e35bf21a2fbb1")]
 [assembly: System.Reflection.AssemblyProductAttribute("eTicaretUygulamasi.Mvc")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eTicaretUygulamasi.Mvc")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

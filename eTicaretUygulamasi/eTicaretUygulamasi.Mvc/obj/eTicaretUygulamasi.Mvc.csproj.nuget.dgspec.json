@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj": {}
+    "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj": {
+    "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj",
+        "projectUniqueName": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj",
         "projectName": "eTicaretUygulamasi.Mvc",
-        "projectPath": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj",
-        "packagesPath": "C:\\Users\\kutba\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\obj\\",
+        "projectPath": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj",
+        "packagesPath": "C:\\Users\\Nuri\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kutba\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Nuri\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

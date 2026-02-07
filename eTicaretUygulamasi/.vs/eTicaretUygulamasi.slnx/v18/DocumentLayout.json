@@ -1,7 +1,28 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamasi\\eTicaretUygulamasi\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|c:\\users\\nuri\\documents\\github\\eticaretuygulamasi\\eticaretuygulamasi\\eticaretuygulamasi.mvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|solutionrelative:eticaretuygulamasi.mvc\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|c:\\users\\nuri\\documents\\github\\eticaretuygulamasi\\eticaretuygulamasi\\eticaretuygulamasi.mvc\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|solutionrelative:eticaretuygulamasi.mvc\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|c:\\users\\nuri\\documents\\github\\eticaretuygulamasi\\eticaretuygulamasi\\eticaretuygulamasi.mvc\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|solutionrelative:eticaretuygulamasi.mvc\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|c:\\users\\nuri\\documents\\github\\eticaretuygulamasi\\eticaretuygulamasi\\eticaretuygulamasi.mvc\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|solutionrelative:eticaretuygulamasi.mvc\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|c:\\users\\nuri\\documents\\github\\eticaretuygulamasi\\eticaretuygulamasi\\eticaretuygulamasi.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{572EAC93-CC9D-2890-B729-9F2600DBA180}|eTicaretUygulamasi.Mvc\\eTicaretUygulamasi.Mvc.csproj|solutionrelative:eticaretuygulamasi.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +39,75 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "eTicaretUygulamasi.Mvc\\Controllers\\CartController.cs",
+              "ToolTip": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\CartController.cs",
+              "RelativeToolTip": "eTicaretUygulamasi.Mvc\\Controllers\\CartController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T04:17:19.241Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "eTicaretUygulamasi.Mvc\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "eTicaretUygulamasi.Mvc\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwBcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T04:15:28.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProfileController.cs",
+              "DocumentMoniker": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\ProfileController.cs",
+              "RelativeDocumentMoniker": "eTicaretUygulamasi.Mvc\\Controllers\\ProfileController.cs",
+              "ToolTip": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\ProfileController.cs",
+              "RelativeToolTip": "eTicaretUygulamasi.Mvc\\Controllers\\ProfileController.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwBcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T04:13:57.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "eTicaretUygulamasi.Mvc\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "eTicaretUygulamasi.Mvc\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T04:11:43.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "eTicaretUygulamasi.Mvc\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Nuri\\Documents\\GitHub\\eTicaretUygulamasi\\eTicaretUygulamasi\\eTicaretUygulamasi.Mvc\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "eTicaretUygulamasi.Mvc\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwCUAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-07T04:08:05.657Z",
+              "EditorCaption": ""
             }
           ]
         }
