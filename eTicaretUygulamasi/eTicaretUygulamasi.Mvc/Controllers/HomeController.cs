@@ -20,22 +20,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
 
-        public IActionResult AboutUs()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        public IActionResult Listing()
-        {
-            return View();
-        }
-
-        public IActionResult ProductDetail(string categoryName,string title,int id)
+        public IActionResult Privacy()
         {
             return View();
         }
