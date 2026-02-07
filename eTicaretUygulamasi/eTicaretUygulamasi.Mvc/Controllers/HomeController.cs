@@ -28,7 +28,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         }
 
-        
         public IActionResult ProductDetail()
         {
             return View();
