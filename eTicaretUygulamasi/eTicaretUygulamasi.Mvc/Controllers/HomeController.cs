@@ -18,6 +18,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
 
+        //oldu mu
         public IActionResult AboutUs()
         {
             return View();
