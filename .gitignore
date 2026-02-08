@@ -1,134 +1,31 @@
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> git reset --soft HEAD~1
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # Visual Studio / .NET
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> .vs/
-.vs/ : The term '.vs/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
- spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ .vs/
-+ ~~~~
-    + CategoryInfo          : ObjectNotFound: (.vs/:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+# ================================
+# Visual Studio / .NET
+# ================================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> *.user
-*.user : The term '*.user' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
- the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ *.user
-+ ~~~~~~
-    + CategoryInfo          : ObjectNotFound: (*.user:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+# ================================
+# Build outputs
+# ================================
+bin/
+obj/
 
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> *.suo
-*.suo : The term '*.suo' is not recognized as the name of a cmdlet, function, script file, or operable program. Check t
-he spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ *.suo
-+ ~~~~~
-    + CategoryInfo          : ObjectNotFound: (*.suo:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+# ================================
+# Rider / VS Code
+# ================================
+.idea/
+.vscode/
 
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> *.userosscache
-*.userosscache : The term '*.userosscache' is not recognized as the name of a cmdlet, function, script file, or operabl
-e program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ *.userosscache
-+ ~~~~~~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (*.userosscache:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+# ================================
+# Logs
+# ================================
+*.log
 
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> *.sln.docstates
-*.sln.docstates : The term '*.sln.docstates' is not recognized as the name of a cmdlet, function, script file, or opera
-ble program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ *.sln.docstates
-+ ~~~~~~~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (*.sln.docstates:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # Build outputs
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> bin/
-bin/ : The term 'bin/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
- spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ bin/
-+ ~~~~
-    + CategoryInfo          : ObjectNotFound: (bin/:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> obj/
-obj/ : The term 'obj/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
- spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ obj/
-+ ~~~~
-    + CategoryInfo          : ObjectNotFound: (obj/:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # Rider / VS Code (opsiyonel ama güvenli)
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> .idea/
-.idea/ : The term '.idea/' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
- the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ .idea/
-+ ~~~~~~
-    + CategoryInfo          : ObjectNotFound: (.idea/:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> .vscode/
-.vscode/ : The term '.vscode/' is not recognized as the name of a cmdlet, function, script file, or operable program. C
-heck the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ .vscode/
-+ ~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (.vscode/:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # Logs
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> *.log
-*.log : The term '*.log' is not recognized as the name of a cmdlet, function, script file, or operable program. Check t
-he spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ *.log
-+ ~~~~~
-    + CategoryInfo          : ObjectNotFound: (*.log:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # OS files
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> # ================================
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> Thumbs.db
-Thumbs.db : The term 'Thumbs.db' is not recognized as the name of a cmdlet, function, script file, or operable program.
- Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ Thumbs.db
-+ ~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (Thumbs.db:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi> .DS_Store
-.DS_Store : The term '.DS_Store' is not recognized as the name of a cmdlet, function, script file, or operable program.
- Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ .DS_Store
-+ ~~~~~~~~~
-    + CategoryInfo          : ObjectNotFound: (.DS_Store:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-
-PS C:\Users\kutba\Desktop\eTicaretUygulamasi>
+# ================================
+# OS files
+# ================================
+Thumbs.db
+.DS_Store
