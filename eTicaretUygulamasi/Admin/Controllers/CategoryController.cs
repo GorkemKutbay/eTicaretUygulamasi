@@ -1,37 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Admin.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        // Category işlemleri için gerekli action methodları burada tanımlanacak
 
-        // Edit
-        [HttpGet("/category/{id}/edit")]
-        public IActionResult Edit()
+
+        [HttpGet("/category/create")]
+        public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost("/category/{id}/edit")]
-        public IActionResult Edit(int id)
+        [HttpPost("/category/create")]
+        public IActionResult Create(CategoryCreateViewModel model)
         {
-            return View();
-        }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-
-        // Delete
-        [HttpGet("/category/{id}/delete")]
-        public IActionResult Delete()
-        {
-            return View();
-        }
-
-        [HttpPost("/category/{id}/delete")]
-        public IActionResult Delete(int id)
-        {
-            return View();
-
+            TempData["SuccessMessage"] = "Yeni kategori oluşturuldu!";
+            return RedirectToAction("Create");
         }
 
     }
