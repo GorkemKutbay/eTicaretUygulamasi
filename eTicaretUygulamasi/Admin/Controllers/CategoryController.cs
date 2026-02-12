@@ -5,7 +5,7 @@ namespace Admin.Controllers
 {
     public class CategoryController : Controller
     {
-
+       
 
         [HttpGet("/category/create")]
         public IActionResult Create()
