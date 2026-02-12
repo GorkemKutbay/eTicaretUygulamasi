@@ -9,10 +9,10 @@ namespace eTicaretUygulamasi.Mvc.App.Data
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<ProductImageEntity> ProductImages{ get; set; }
         public DbSet<ProductCommentEntity> ProductComments { get; set; }
-        public DbSet<CategoryEntity> CategoryEntities { get; set; }
-        public DbSet<CartItemEntity> CartItemEntities { get; set; }
-        public DbSet<OrderEntity> OrderEntities { get; set; }
-        public DbSet<OrderItemEntity> OrderItemEntities { get; set; }
+        public DbSet<CategoryEntity> Categories { get; set; }
+        public DbSet<CartItemEntity> CartItems { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<OrderItemEntity> OrderItemS { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext>options):base(options)
         {
             
