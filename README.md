@@ -40,3 +40,5 @@ This project is currently under development and focuses on backend and MVC archi
 
 ## 📫 Contact
 LinkedIn: https://linkedin.com/in/görkem-kutbay-48586839a
+www.linkedin.com/in/bariscoskun441 /BarisCoskun
+linkedin.com/in/inci-batman-başel-886b32103/İnci Batman Basel
