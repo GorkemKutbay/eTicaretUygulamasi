@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using eTicaretUygulamasi.Mvc.App.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace eTicaretUygulamasi.Mvc.App.Data
 {
     public class AppDbContext:DbContext
     {
         public DbSet<UserEntity> Users { get; set; }
-        public DbSet<RoleEntitiy> Roles { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<ProductImageEntity> ProductImages{ get; set; }
         public DbSet<ProductCommentEntity> ProductComments { get; set; }
