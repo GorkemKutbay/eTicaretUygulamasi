@@ -1,10 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
 }
 
 
 
-<body>
+
+
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -12,7 +14,7 @@
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
+    @* <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
             <a href="#"><img src="img/logo.png" alt=""></a>
         </div>
@@ -39,19 +41,19 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
+                <li class="active">Home</li>
+                <li>Shop</li>
                 <li>
                     <a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
+                        <li>Shop Details</li>
+                        <li>Shoping Cart</li>
+                    <li>Check Out</li>
+                    <li>Blog Details<li>
                     </ul>
                 </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li>Blog<li>
+                <li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -68,7 +70,7 @@
             </ul>
         </div>
     </div>
-    <!-- Humberger End -->
+    <!-- Humberger End --> *@
     <!-- Header Section Begin -->
     
    
@@ -605,4 +607,3 @@
 
 
 
-</body>
