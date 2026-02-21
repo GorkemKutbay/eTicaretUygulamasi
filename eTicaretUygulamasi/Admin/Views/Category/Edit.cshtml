@@ -1,40 +1,43 @@
-﻿@model Admin.Models.CategoryCreateViewModel
+@model Admin.Models.CategoryEditViewModel
 
 @{
-    ViewData["Title"] = "Yeni Kategori";
+    ViewData["Title"] = "Kategori Düzenle";
 }
 
-<h1>Yeni Kategori Oluştur</h1>
+<h1>Kategori Düzenle</h1>
 
-@* asp-validation-summary="All" → validasyon hatalarının özetini gösterir *@
 <div asp-validation-summary="All" class="alert alert-danger" style="display:none"></div>
 
-<form method="post" asp-action="Create">
+@* asp-action="Edit" → formun POST edeceği URL *@
+<form method="post" asp-action="Edit">
+
+    @* Id gizli input: kullanıcı görmez ama POST verisiyle gönderilir.
+       Hangi kategoriyi güncellediğimizi bilmek için şart. *@
+    <input asp-for="Id" type="hidden" />
 
     <div class="mb-3">
         <label asp-for="Name">Kategori Adı</label>
-        <input asp-for="Name" class="form-control" placeholder="Örn: Elektronik" />
+        <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Color">Renk</label>
-        @* MaxLength 6 → Renk kodu (Bootstrap renk adı). Örn: Blue, Red *@
-        <input asp-for="Color" class="form-control" placeholder="Örn: Blue" />
+        <input asp-for="Color" class="form-control" />
         <span asp-validation-for="Color" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="IconCssClass">İkon CSS Sınıfı</label>
-        <input asp-for="IconCssClass" class="form-control" placeholder="Örn: fa fa-fw fa-bolt" />
+        <input asp-for="IconCssClass" class="form-control" />
         <span asp-validation-for="IconCssClass" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Kaydet</button>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+    <a href="/Home/Index" class="btn btn-secondary">İptal</a>
 </form>
 
 @section Scripts {
-    @* Client-side validasyon için jQuery Validation scriptleri *@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
     @if (TempData["SuccessMessage"] != null)
@@ -42,7 +45,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             Swal.fire({
-                title: 'Tebrikler!',
+                title: 'Güncellendi!',
                 text: '@Html.Raw(TempData["SuccessMessage"])',
                 icon: 'success',
                 confirmButtonText: 'Tamam'
