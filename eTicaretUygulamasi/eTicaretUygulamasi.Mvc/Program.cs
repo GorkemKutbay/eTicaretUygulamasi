@@ -39,7 +39,7 @@ using (var scope = app.Services.CreateScope())
     using (var dbcontext = scope.ServiceProvider.GetRequiredService<AppDbContext>())
     {
         await dbcontext.Database.EnsureCreatedAsync();
-        await DbSeed.SeedAsync(dbcontext);
+        
     }
 }
 

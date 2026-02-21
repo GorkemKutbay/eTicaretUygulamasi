@@ -5,7 +5,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly AppDbContext _dbContext;
+        private readonly  AppDbContext _dbContext;
 
         public AuthController(AppDbContext dbContext)
         {
