@@ -1,15 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Admin.Models
 {
-    public class CategoryCreateViewModel
+    public class CategoryEditViewModel
     {
+        
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Kategori adı boş olamaz!")]
         [StringLength(100, ErrorMessage = "En fazla 100 karakter girebilirsiniz.")]
         public string Name { get; set; } = null!;
 
         [Required(ErrorMessage = "Renk boş olamaz!")]
-        [StringLength(20, ErrorMessage = "En fazla 20 karakter girebilirsiniz.")]
+        [StringLength(6, ErrorMessage = "En fazla 6 karakter girebilirsiniz.")]
         public string Color { get; set; } = null!;
 
         [Required(ErrorMessage = "İkon CSS sınıfı boş olamaz!")]
@@ -17,4 +20,3 @@ namespace Admin.Models
         public string IconCssClass { get; set; } = null!;
     }
 }
-

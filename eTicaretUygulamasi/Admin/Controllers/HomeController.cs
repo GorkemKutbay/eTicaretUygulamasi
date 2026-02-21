@@ -1,21 +1,32 @@
 using Admin.Models;
+using eTicaretUygulamasi.Mvc.App.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Admin.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+       
+        private readonly AppDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        
+        public HomeController(AppDbContext dbContext)
         {
-            _logger = logger;
+            _dbContext = dbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+           
+            var model = new HomeIndexViewModel
+            {
+                CategoryCount = _dbContext.Categories.Count(),
+                UserCount = _dbContext.Users.Count(),
+                ProductCount = _dbContext.Products.Count()
+            };
+
+           
+            return View(model);
         }
     }
 }
