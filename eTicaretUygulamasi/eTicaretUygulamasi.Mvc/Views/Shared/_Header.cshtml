@@ -27,7 +27,7 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="active" > <a asp-action="index" asp-controller="home">Home</a><li>
+            <li class="active" > <a asp-action="index" asp-controller="home">Home</a></li>
             <li><a href="./shop-grid.html">Shop</a></li>
             <li>
                 <a href="#">Pages</a>
@@ -40,7 +40,7 @@
             </li>
             <li><a href="./blog.html">Blog</a></li>
             <li><a asp-action="Contact" asp-controller="home">Contact</a></li>
-            <li><a asp-action="AboutUs" asp-controller="home">About Us</a></li>
+            <li><a  asp-controller="home" asp-action="AboutUs">About Us </a></li>
         </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -105,20 +105,35 @@
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li class="active"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li>Shop</li>
+                        <li class="active">
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Shop</a>
+                        </li>
+
                         <li>
                             <a href="#">Pages</a>
                             <ul class="header__menu__dropdown">
-                                <li>Shop Details</li>
-                                <li>Shoping Cart</li>
-                                <li>Check Out</li>
-                                <li>Blog Details</li>
+                                <li><a href="#">Shop Details</a></li>
+                                <li><a href="#">Shopping Cart</a></li>
+                                <li><a href="#">Check Out</a></li>
+                                <li><a href="#">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li>Blog</li>
-                        <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About</a></li>
+
+                        <li>
+                            <a href="#">Blog</a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="Contact">Contact</a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home" asp-action="AboutUs">About Us</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
