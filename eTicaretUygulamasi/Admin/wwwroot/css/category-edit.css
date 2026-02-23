@@ -1,0 +1,51 @@
+/* ================================================
+   Category EDIT - Turuncu Tema Override
+   ================================================ */
+
+.page-hero {
+    background: linear-gradient(135deg, #f4a62a 0%, #d4861a 100%);
+}
+
+.form-card-header .header-icon {
+    background: #f4a62a;
+}
+
+.field-label i {
+    color: #f4a62a;
+}
+
+.field-input:focus {
+    border-color: #f4a62a;
+    box-shadow: 0 0 0 3px rgba(244, 166, 42, 0.12);
+    background: #fff;
+    outline: none;
+}
+
+.btn-action {
+    height: 48px;
+    padding: 0 36px;
+    background: #f4a62a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-action:hover {
+    background: #d4861a;
+    transform: translateY(-1px);
+    color: #fff;
+}
+
+.btn-action:active {
+    transform: translateY(0);
+}
