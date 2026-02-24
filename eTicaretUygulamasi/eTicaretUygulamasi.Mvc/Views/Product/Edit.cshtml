@@ -1,0 +1,76 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.ProductEditViewModel
+
+@{
+    ViewData["Title"] = "Ürün Düzenle";
+}
+
+<div class="container mt-4">
+
+    <h3>Ürün Düzenle</h3>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+    }
+
+    @if (Model != null)
+    {
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form method="post" asp-action="Edit" asp-controller="Product">
+
+            <input asp-for="Id" type="hidden" />
+            <input asp-for="SellerId" type="hidden" />
+
+            <div class="mb-3">
+                <label asp-for="DDName" class="form-label">Product Name</label>
+                <input asp-for="DDName" class="form-control" />
+                <span asp-validation-for="DDName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label">Price</label>
+                <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Details" class="form-label">Details</label>
+                <textarea asp-for="Details" class="form-control"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="StockAmount" class="form-label">Stock Amount</label>
+                <input asp-for="StockAmount" class="form-control" type="number" />
+                <span asp-validation-for="StockAmount" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label">Category</label>
+                <select asp-for="CategoryId" class="form-select">
+                    <option value="">-- Seçin --</option>
+                    @foreach (var cat in ViewBag.Categories)
+                    {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Güncelle</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-danger">İptal</a>
+
+        </form>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
