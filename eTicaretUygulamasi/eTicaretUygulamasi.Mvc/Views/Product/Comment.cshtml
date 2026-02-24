@@ -1,0 +1,63 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.ProductCommentViewModel
+
+@{
+    ViewData["Title"] = "Yorum Yap";
+}
+
+<div class="container mt-4">
+
+    <h3>Yorum ve Yıldız Ver</h3>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+    }
+
+    @if (ViewBag.ProductName != null)
+    {
+        <p><strong>@ViewBag.ProductName</strong> için yorum yapıyorsunuz.</p>
+        <hr />
+    }
+
+    @if (Model != null)
+    {
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form method="post" asp-action="Comment">
+
+            <input asp-for="ProductId" type="hidden" />
+
+            <div class="mb-3">
+                <label asp-for="StarCount" class="form-label"></label>
+                <select asp-for="StarCount" class="form-select">
+                    <option value="1">1 Yıldız</option>
+                    <option value="2">2 Yıldız</option>
+                    <option value="3">3 Yıldız</option>
+                    <option value="4">4 Yıldız</option>
+                    <option value="5">5 Yıldız</option>
+                </select>
+                <span asp-validation-for="StarCount" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Text" class="form-label"></label>
+                <textarea asp-for="Text" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Yorum Gönder</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">İptal</a>
+
+        </form>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
