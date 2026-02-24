@@ -1,0 +1,53 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.ProductDeleteViewModel
+
+@{
+    ViewData["Title"] = "Ürünü Sil";
+}
+
+<div class="container mt-4">
+
+    <h3>Ürünü Sil</h3>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Ana Sayfaya Dön</a>
+    }
+
+    @if (Model != null && ViewBag.SuccessMessage == null)
+    {
+        <div class="alert alert-warning">
+            Bu ürünü silmek istediğinize emin misiniz?
+        </div>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Ürün Adı</th>
+                <td>@Model.DDName</td>
+            </tr>
+            <tr>
+                <th>Fiyat</th>
+                <td>@Model.Price.ToString("C2")</td>
+            </tr>
+            <tr>
+                <th>Kategori</th>
+                <td>@Model.CategoryName</td>
+            </tr>
+            <tr>
+                <th>Stok</th>
+                <td>@Model.StockAmount</td>
+            </tr>
+        </table>
+
+        <form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+            <button type="submit" class="btn btn-danger">Evet, Sil</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">İptal</a>
+        </form>
+    }
+
+</div>

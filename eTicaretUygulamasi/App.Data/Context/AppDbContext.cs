@@ -46,6 +46,13 @@ namespace eTicaretUygulamasi.Mvc.App.Data
                 new() { Id = 10, Name = "Food", Color = "Black", IconCssClass = "fa fa-fw fa-cutlery", CreatedAt = DateTime.UtcNow }
                 }
              );
+            modelBuilder.Entity<ProductEntity>().HasData(
+            new ProductEntity { Id = 1, SellerId = 1, CategoryId = 1, DDName = "Gaming Mouse Pro X", Price = 1499.99m, Details = "RGB aydınlatmalı, 16000 DPI profesyonel oyuncu mouse.", StockAmount = 25, CreatedAt = DateTime.UtcNow, Enabled = true },
+            new ProductEntity { Id = 2, SellerId = 1, CategoryId = 2, DDName = "Oversize Hoodie", Price = 899.90m, Details = "Unisex, pamuklu oversize hoodie.", StockAmount = 50, CreatedAt = DateTime.UtcNow, Enabled = true },
+            new ProductEntity { Id = 3, SellerId = 1, CategoryId = 4, DDName = "Clean Code Kitabı", Price = 599.00m, Details = "Yazılım geliştiriciler için temiz kod rehberi.", StockAmount = 30, CreatedAt = DateTime.UtcNow, Enabled = true },
+            new ProductEntity { Id = 4, SellerId = 1, CategoryId = 6, DDName = "Fitness Dumbbell Set", Price = 1299.00m, Details = "Ayarlanabilir ağırlık seti.", StockAmount = 15, CreatedAt = DateTime.UtcNow, Enabled = true },
+            new ProductEntity { Id = 5, SellerId = 1, CategoryId = 3, DDName = "Ahşap Kitaplık", Price = 3499.99m, Details = "Modern tasarım 5 raflı kitaplık.", StockAmount = 8, CreatedAt = DateTime.UtcNow, Enabled = true }
+);
 
             modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
             modelBuilder.ApplyConfiguration(new RoleEntityConfiguration());
