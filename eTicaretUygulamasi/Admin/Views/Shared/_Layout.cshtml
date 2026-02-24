@@ -17,12 +17,21 @@
 </head>
 <body>
     <partial name="_Header"/>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div id="wrapper">
+
+        <partial name="_Sidebar" />
+
+        <div id="content-wrapper">
+            <partial name="_Topbar" />
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
     </div>
     <partial name="_Footer"/>
+    
     
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
