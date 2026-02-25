@@ -1,0 +1,57 @@
+﻿@model Admin.Models.ProductDeleteViewModel
+
+@{
+    ViewData["Title"] = "Ürünü Sil";
+}
+
+<div class="container-fluid">
+
+    <h1 class="h3 mb-4 text-gray-800">Ürünü Sil</h1>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Ana Sayfaya Dön</a>
+    }
+
+    @if (Model != null && ViewBag.SuccessMessage == null)
+    {
+        <div class="alert alert-warning">
+            <strong>Dikkat!</strong> Bu ürünü silmek istediğinize emin misiniz?
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <td>@Model.DDName</td>
+                    </tr>
+                    <tr>
+                        <th>Fiyat</th>
+                        <td>@Model.Price.ToString("C2")</td>
+                    </tr>
+                    <tr>
+                        <th>Kategori</th>
+                        <td>@Model.CategoryName</td>
+                    </tr>
+                    <tr>
+                        <th>Stok</th>
+                        <td>@Model.StockAmount</td>
+                    </tr>
+                </table>
+
+                <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">İptal</a>
+                </form>
+            </div>
+        </div>
+    }
+
+</div>
