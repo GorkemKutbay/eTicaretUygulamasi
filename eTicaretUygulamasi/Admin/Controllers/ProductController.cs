@@ -75,5 +75,10 @@ namespace Admin.Controllers
 
 
         }
+        public IActionResult ListAllProducts()
+        {
+            ViewBag.Products = _context.Products.ToList();
+            return View();
+        }
     }
 }

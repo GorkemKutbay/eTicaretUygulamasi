@@ -1,0 +1,99 @@
+﻿
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Kategoriler</h1>
+                @*< p class="mb-4">
+                   
+                </p> *@
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Kategori Paneli</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Kategori Adı</th>
+                                        <th>Renk</th>
+                                        <th>Css İkon Sınıfı</th>
+                                        <th>Üretilme Tarihi</th>
+                                        <th>Düzenle</th>
+                                        <th>Sil</th>
+
+                                    </tr>
+                                </thead>
+                                
+                                <tbody>
+                                    @foreach (var item in ViewBag.Categories)
+                                    {
+                                        <tr>
+                                            <td>@item.Id</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Color</td>
+                                            <td>@item.IconCssClass</td>
+                                            <td>@item.CreatedAt</td>
+                                            <td><a class="btn btn-info" asp-route-id="@item.Id" asp-action="Edit" asp-controller="Category">Düzenle</a></td>
+                                            <td><a class="btn btn-danger" asp-route-id="@item.Id" asp-action="Delete" asp-controller="Category">Sil</a></td>
+
+
+
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Kategori Adı</th>
+                                        <th>Renk</th>
+                                        <th>Css İkon Sınıfı</th>
+                                        <th>Üretilme Tarihi</th>
+                                        <th>Düzenle</th>
+                                        <th>Sil</th>
+
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>

@@ -1,154 +1,184 @@
-/* ================================================
-   Category Form Shared Styles
-   Kullanım: Create.cshtml + Edit.cshtml
-   ================================================ */
+/* Category Form Styles */
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-
-/* --- Hero Bar --- */
 .page-hero {
-    padding: 40px 0;
-    margin-bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 60px 0;
+    margin-bottom: 40px;
 }
+
 .page-hero h1 {
-    color: #fff;
-    font-size: 26px;
+    font-size: 2.5rem;
     font-weight: 700;
-    font-family: 'Cairo', sans-serif;
-    margin: 0 0 6px 0;
-    letter-spacing: 0.5px;
+    margin-bottom: 15px;
 }
-.page-hero .breadcrumb-nav {
-    font-size: 13px;
-    color: rgba(255,255,255,0.8);
-    font-family: 'Cairo', sans-serif;
+
+.breadcrumb-nav {
+    font-size: 0.95rem;
+    opacity: 0.9;
 }
-.page-hero .breadcrumb-nav a {
-    color: rgba(255,255,255,0.9);
+
+.breadcrumb-nav a {
+    color: white;
     text-decoration: none;
+    transition: opacity 0.3s;
 }
-.page-hero .breadcrumb-nav a:hover { color: #fff; }
-.page-hero .breadcrumb-nav span { margin: 0 8px; opacity: 0.6; }
 
-/* --- Form Section Wrapper --- */
+.breadcrumb-nav a:hover {
+    opacity: 0.8;
+}
+
+.breadcrumb-nav span {
+    margin: 0 10px;
+}
+
 .form-section {
-    background: #f7f8fa;
-    padding: 50px 0 70px;
-    font-family: 'Cairo', sans-serif;
+    padding: 40px 0 80px;
 }
 
-/* --- Card --- */
+.validation-alert {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
 .form-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     overflow: hidden;
 }
+
 .form-card-header {
-    background: #fff;
-    border-bottom: 2px solid #f0f0f0;
-    padding: 24px 32px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 }
-.form-card-header .header-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 8px;
+
+.header-icon {
+    background: rgba(255,255,255,0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 16px;
-    flex-shrink: 0;
+    font-size: 24px;
 }
+
 .form-card-header h5 {
     margin: 0;
-    font-size: 17px;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: #1c1c1c;
-    font-family: 'Cairo', sans-serif;
 }
-.form-card-header p {
-    margin: 2px 0 0;
-    font-size: 13px;
-    color: #888;
-    font-family: 'Cairo', sans-serif;
-}
-.form-card-body { padding: 32px; }
 
-/* --- Fields --- */
-.field-group { margin-bottom: 24px; }
-.field-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: #444;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    display: block;
-    font-family: 'Cairo', sans-serif;
+.form-card-header p {
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+    font-size: 0.95rem;
 }
-.field-label i { margin-right: 6px; }
+
+.form-card-body {
+    padding: 40px;
+}
+
+.field-group {
+    margin-bottom: 25px;
+}
+
+.field-label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.field-label i {
+    margin-right: 8px;
+    color: #667eea;
+}
+
 .field-input {
     width: 100%;
-    height: 48px;
-    border: 1.5px solid #e8e8e8;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
     border-radius: 8px;
-    padding: 0 16px;
-    font-size: 15px;
-    color: #333;
-    background: #fafafa;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    font-family: 'Cairo', sans-serif;
-    box-sizing: border-box;
+    font-size: 1rem;
+    transition: all 0.3s;
 }
-.field-input::placeholder { color: #bbb; }
-.field-hint {
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 6px;
-    display: block;
-    font-family: 'Cairo', sans-serif;
-}
-.field-error {
-    font-size: 12px;
-    color: #e74c3c;
-    margin-top: 5px;
-    display: block;
-    font-family: 'Cairo', sans-serif;
-}
-.divider { border: none; border-top: 1.5px solid #f0f0f0; margin: 8px 0 24px; }
 
-/* --- Cancel Button (shared) --- */
-.btn-cancel {
-    height: 48px;
-    padding: 0 28px;
-    background: transparent;
-    color: #888;
-    border: 1.5px solid #ddd;
+.field-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.field-hint {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+.field-error {
+    display: block;
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin: 30px 0;
+}
+
+.btn-action {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-    text-decoration: none;
+    transition: all 0.3s;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s;
-    margin-left: 12px;
 }
-.btn-cancel:hover { border-color: #bbb; color: #555; background: #f5f5f5; }
 
-/* --- Validation Alert --- */
-.validation-alert {
-    background: #fff5f5;
-    border: 1px solid #fcc;
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
     border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 24px;
-    color: #e74c3c;
-    font-size: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    color: white;
 }
