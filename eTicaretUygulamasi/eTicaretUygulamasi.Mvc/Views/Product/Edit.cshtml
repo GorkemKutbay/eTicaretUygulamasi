@@ -4,67 +4,77 @@
     ViewData["Title"] = "Ürün Düzenle";
 }
 
-<div class="container mt-4">
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
 
-    <h3>Ürün Düzenle</h3>
+    <h3 class="fw-bold text-dark">Ürün Düzenle</h3>
+    <hr class="border-success border-3 opacity-100 mb-4" style="width: 60px;" />
 
     @if (ViewBag.ErrorMessage != null)
     {
-        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
     }
 
     @if (ViewBag.SuccessMessage != null)
     {
-        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        <div class="alert alert-success shadow-sm border-0">@ViewBag.SuccessMessage</div>
     }
 
     @if (Model != null)
     {
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
         <form method="post" asp-action="Edit" asp-controller="Product">
 
             <input asp-for="Id" type="hidden" />
             <input asp-for="SellerId" type="hidden" />
 
-            <div class="mb-3">
-                <label asp-for="DDName" class="form-label">Product Name</label>
-                <input asp-for="DDName" class="form-control" />
-                <span asp-validation-for="DDName" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label asp-for="DDName" class="form-label fw-bold text-dark">Ürün Adı (Product Name)</label>
+                    <input asp-for="DDName" class="form-control rounded-0 py-2" />
+                    <span asp-validation-for="DDName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label asp-for="Price" class="form-label fw-bold text-dark">Fiyat (Price)</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 rounded-0 text-muted">₺</span>
+                        <input asp-for="Price" class="form-control rounded-0 py-2 border-start-0" type="number" step="0.01" />
+                    </div>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Price" class="form-label">Price</label>
-                <input asp-for="Price" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="Details" class="form-label">Details</label>
-                <textarea asp-for="Details" class="form-control"></textarea>
+            <div class="mb-4">
+                <label asp-for="Details" class="form-label fw-bold text-dark">Detaylar (Details)</label>
+                <textarea asp-for="Details" class="form-control rounded-0 py-2" rows="4"></textarea>
                 <span asp-validation-for="Details" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="StockAmount" class="form-label">Stock Amount</label>
-                <input asp-for="StockAmount" class="form-control" type="number" />
-                <span asp-validation-for="StockAmount" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label asp-for="StockAmount" class="form-label fw-bold text-dark">Stok Miktarı (Stock Amount)</label>
+                    <input asp-for="StockAmount" class="form-control rounded-0 py-2" type="number" />
+                    <span asp-validation-for="StockAmount" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label asp-for="CategoryId" class="form-label fw-bold text-dark">Kategori (Category)</label>
+                    <select asp-for="CategoryId" class="form-select rounded-0 py-2">
+                        <option value="">-- Seçin --</option>
+                        @foreach (var cat in ViewBag.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="CategoryId" class="form-label">Category</label>
-                <select asp-for="CategoryId" class="form-select">
-                    <option value="">-- Seçin --</option>
-                    @foreach (var cat in ViewBag.Categories)
-                    {
-                        <option value="@cat.Id">@cat.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-success fw-bold text-uppercase rounded-0 px-4 py-2">Güncelle</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2 ms-2">İptal</a>
             </div>
-
-            <button type="submit" class="btn btn-success">Güncelle</button>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-danger">İptal</a>
 
         </form>
     }

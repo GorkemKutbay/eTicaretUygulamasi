@@ -4,37 +4,38 @@
     ViewData["Title"] = "Yorum Yap";
 }
 
-<div class="container mt-4">
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
 
-    <h3>Yorum ve Yıldız Ver</h3>
+    <h3 class="fw-bold text-dark">Yorum ve Yıldız Ver</h3>
+    <hr class="border-success border-3 opacity-100 mb-4" style="width: 60px;" />
 
     @if (ViewBag.ErrorMessage != null)
     {
-        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
     }
 
     @if (ViewBag.SuccessMessage != null)
     {
-        <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+        <div class="alert alert-success shadow-sm border-0">@ViewBag.SuccessMessage</div>
     }
 
     @if (ViewBag.ProductName != null)
     {
-        <p><strong>@ViewBag.ProductName</strong> için yorum yapıyorsunuz.</p>
-        <hr />
+        <p class="text-secondary"><strong class="text-success">@ViewBag.ProductName</strong> için yorum yapıyorsunuz.</p>
+        <hr class="text-muted mb-4" />
     }
 
     @if (Model != null)
     {
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
         <form method="post" asp-action="Comment">
 
             <input asp-for="ProductId" type="hidden" />
 
-            <div class="mb-3">
-                <label asp-for="StarCount" class="form-label"></label>
-                <select asp-for="StarCount" class="form-select">
+            <div class="mb-4">
+                <label asp-for="StarCount" class="form-label fw-bold text-dark"></label>
+                <select asp-for="StarCount" class="form-select rounded-0 py-2">
                     <option value="1">1 Yıldız</option>
                     <option value="2">2 Yıldız</option>
                     <option value="3">3 Yıldız</option>
@@ -44,14 +45,16 @@
                 <span asp-validation-for="StarCount" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Text" class="form-label"></label>
-                <textarea asp-for="Text" class="form-control" rows="4"></textarea>
+            <div class="mb-4">
+                <label asp-for="Text" class="form-label fw-bold text-dark"></label>
+                <textarea asp-for="Text" class="form-control rounded-0 py-2" rows="5" placeholder="Ürün hakkındaki düşüncelerinizi buraya yazın..."></textarea>
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
 
-            <button type="submit" class="btn btn-success">Yorum Gönder</button>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">İptal</a>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success fw-bold text-uppercase rounded-0 px-4 py-2">Yorum Gönder</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2 ms-2">İptal</a>
+            </div>
 
         </form>
     }
