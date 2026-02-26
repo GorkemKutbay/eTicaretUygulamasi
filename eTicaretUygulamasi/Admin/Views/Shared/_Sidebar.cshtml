@@ -45,12 +45,12 @@
 
                 <h6 class="collapse-header">Kategori İşlemleri:</h6>
 
-                <a class="collapse-item" href="categories.html">
+                <a class="collapse-item" asp-action="ListAllCategory" asp-controller="Category">
                     <i class="fas fa-list mr-2 text-gray-400"></i>
                     Kategoriler
                 </a>
 
-                <a class="collapse-item" href="category-add.html">
+                <a class="collapse-item" asp-action="Create" asp-controller="Category">
                     <i class="fas fa-plus-circle mr-2 text-gray-400"></i>
                     Kategori Ekle
                 </a>
@@ -59,7 +59,7 @@
 
                 <h6 class="collapse-header">Ürün İşlemleri:</h6>
 
-                <a class="collapse-item" href="products.html">
+                <a class="collapse-item" asp-action="ListAllProducts" asp-controller="Product">
                     <i class="fas fa-box-open mr-2 text-gray-400"></i>
                     Ürünler
                 </a>

@@ -107,5 +107,11 @@ namespace Admin.Controllers
             
             return RedirectToAction("Edit", new { id = entity.Id });
         }
+        [HttpGet]
+        public IActionResult ListAllCategory()
+        {
+            ViewBag.Categories = _dbContext.Categories.ToList();
+            return View();
+        }
     }
 }
