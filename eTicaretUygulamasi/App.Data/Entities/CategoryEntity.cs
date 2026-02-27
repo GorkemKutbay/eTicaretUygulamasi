@@ -28,7 +28,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
         {
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            builder.Property(e => e.Color).IsRequired().HasMaxLength(6);
+            builder.Property(e => e.Color).IsRequired().HasMaxLength(20);
             builder.Property(e => e.IconCssClass).IsRequired().HasMaxLength(50);
             builder.Property(e => e.CreatedAt).IsRequired();
         }
