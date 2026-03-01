@@ -19,5 +19,37 @@ namespace eTicaretUygulamasi.Mvc.App.Data
         {
             
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Bu satır her zaman en başta bir kez durmalı
+            base.OnModelCreating(modelBuilder);
+
+            // 1. Sipariş Öğeleri (OrderItem) ve Ürünler arasındaki çakışmayı gider
+            modelBuilder.Entity<OrderItemEntity>()
+                .HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // 2. Sepet Öğeleri (CartItem) ve Kullanıcılar arasındaki çakışmayı gider
+            modelBuilder.Entity<CartItemEntity>()
+                .HasOne(ci => ci.User)
+                .WithMany()
+                .HasForeignKey(ci => ci.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // 3. Ürün Yorumları (ProductComment) ve Kullanıcılar arasındaki çakışmayı gider
+            // (Görsel 65cb10'daki hatayı bu satır çözer)
+            modelBuilder.Entity<ProductCommentEntity>()
+                .HasOne(pc => pc.User)
+                .WithMany()
+                .HasForeignKey(pc => pc.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Eğer tablolarında başka özel kısıtlamalar (MaxLength, Required vb.) varsa 
+            // onları da buranın altına eklemeye devam edebilirsin.
+        }
     }
 }

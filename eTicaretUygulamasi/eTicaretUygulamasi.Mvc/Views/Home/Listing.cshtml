@@ -1,0 +1,56 @@
+﻿@model IEnumerable<eTicaretUygulamasi.Mvc.App.Data.Entities.ProductEntity>
+
+@{
+    ViewData["Title"] = "Ürün Listesi";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">Tüm Ürünler</h2>
+        <a asp-controller="Product" asp-action="Create" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-circle"></i> Yeni Ürün Ekle
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4">Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                        <th class="text-center pe-4">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 align-middle fw-semibold">@item.DDName</td>
+                            <td class="align-middle">
+                                <span class="badge rounded-pill px-3 bg-success text-white" >
+                                    @(item.Category?.Name ?? "Kategorisiz")
+                                </span>
+                            </td>
+                            <td class="align-middle text-success fw-bold">@item.Price.ToString("C2")</td>
+                            <td class="text-center pe-4 align-middle">
+                                <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary px-3">
+                                    İncele
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

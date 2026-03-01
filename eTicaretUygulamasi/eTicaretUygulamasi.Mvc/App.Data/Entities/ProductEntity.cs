@@ -15,6 +15,8 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
         [Required]
         public int CategoryId { get; set; }
 
+        public CategoryEntity? Category { get; set; }
+
         [Required,Range(2,100)]
         public string DDName { get; set; }
 

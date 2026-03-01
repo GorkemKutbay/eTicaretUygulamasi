@@ -1,6 +1,8 @@
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 
 namespace eTicaretUygulamasi.Mvc.Controllers
@@ -30,13 +32,30 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
         public IActionResult Listing()
         {
-            return View();
+            var products = _dbContext.Products.Include(p => p.Category).ToList();
+
+            return View(products);
 
         }
 
-        public IActionResult ProductDetail()
+        public IActionResult ProductDetail(int id)
         {
-            return View();
+            var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new ProductDetailViewModel 
+            { 
+                Id = product.Id,
+                Name = product.DDName,
+                Price = product.Price,
+                CategoryName = product.Category?.Name ?? "Kategori bulunamdı"
+            };
+
+            return View(viewModel);
 
         }
 

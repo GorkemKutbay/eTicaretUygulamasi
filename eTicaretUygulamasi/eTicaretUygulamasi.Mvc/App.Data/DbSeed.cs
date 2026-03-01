@@ -1,6 +1,8 @@
 ﻿using eTicaretUygulamasi.Mvc.App.Data.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Drawing;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace eTicaretUygulamasi.Mvc.App.Data
 {
@@ -8,133 +10,47 @@ namespace eTicaretUygulamasi.Mvc.App.Data
     {
         public static async Task SeedAsync(AppDbContext dbContext)
         {
-            var buyer = new RoleEntity()
-            {
-                Name = "Buyer",
-                CreatedAt = DateTime.Now,
-            };
-            dbContext.Roles.Add(buyer);
-            var seller = new RoleEntity()
-            {
-                Name = "Seller",
-                CreatedAt = DateTime.Now,
-            };
-            dbContext.Roles.Add(seller);
-            var Admin = new RoleEntity()
-            {
-                Name = "Admin",
-                CreatedAt = DateTime.Now,
-            };
-            dbContext.Roles.Add(Admin);
+            // Kategoriler tablosunda herhangi bir veri varsa metottan çık (Çiftlemeyi önler)
+            if (await dbContext.Categories.AnyAsync()) return;
 
-            var Owner = new UserEntity()
-            {
+            // 1. Rolleri Ekle
+            var buyer = new RoleEntity { Name = "Buyer", CreatedAt = DateTime.Now };
+            var seller = new RoleEntity { Name = "Seller", CreatedAt = DateTime.Now };
+            var admin = new RoleEntity { Name = "Admin", CreatedAt = DateTime.Now };
+            await dbContext.Roles.AddRangeAsync(buyer, seller, admin);
 
+            // 2. Admin Kullanıcısını Ekle
+            var owner = new UserEntity
+            {
                 FirstName = "Mahmut",
                 LastName = "Taşkaya",
                 Email = "mahmuttaskaya@outlook.com",
                 Password = "mahmut123",
-                Role = Admin,
+                Role = admin,
                 CreatedAt = DateTime.Now,
                 Enabled = true
+            };
+            await dbContext.Users.AddAsync(owner);
 
+            // 3. Kategorileri Ekle (Truncated hatası almamak için renkleri kısa tuttum)
+            var categories = new List<CategoryEntity>
+            {
+                new CategoryEntity { Name="FreshMeat", Color="Red", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Vegetable", Color="Green", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Fish", Color="Blue", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Beverage", Color="Red", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Snack", Color="Black", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="FastFood", Color="Red", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Alcohol", Color="Orng", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="IceCream", Color="White", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="DriedFruit", Color="Orng", IconCssClass="card", CreatedAt=DateTime.Now },
+                new CategoryEntity { Name="Cosmetic", Color="Blue", IconCssClass="card", CreatedAt=DateTime.Now }
             };
-            dbContext.Users.Add(Owner);
 
+            await dbContext.Categories.AddRangeAsync(categories);
 
-            //            Id
-            //            Name
-            //            Color
-            //            IconCssClass   
-            //            CreatedAt
-            var FreshMeat = new CategoryEntity()
-            {
-                Name="FreshMeat",
-                Color="Kırmızı",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(FreshMeat);
-
-            var Vegetable = new CategoryEntity()
-            {
-                Name="Vegetable",
-                Color="Yeşil",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Vegetable);
-
-            var Fish = new CategoryEntity()
-            {
-                Name="Fish",
-                Color="Mavi",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Fish);
-            var Beverage= new CategoryEntity()
-            {
-                Name= "Beverage",
-                Color="Kırmızı",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Beverage);
-            var Snack = new CategoryEntity()
-            {
-                Name= "Snack",
-                Color="Siyah",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Snack);
-            var FastFood = new CategoryEntity()
-            {
-                Name= "FastFood",
-                Color="Kırmızı",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(FastFood);
-            var Alcohol = new CategoryEntity()
-            {
-                Name= "Alcohol",
-                Color="Turuncu", //viski :))
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Alcohol);
-            var IceCream = new CategoryEntity()
-            {
-                Name= "IceCream",
-                Color="Beyaz",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(IceCream);
-            var DriedFruit = new CategoryEntity()
-            {
-                Name= "DriedFruit",
-                Color="Turuncu",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(DriedFruit);
-            var Cosmetic = new CategoryEntity()
-            {
-                Name= "Cosmetic",
-                Color="Mavi",
-                IconCssClass="card",
-                CreatedAt= DateTime.Now,
-            };
-            dbContext.Categories.Add(Cosmetic);
-
-
-
-
+            // Her şeyi tek seferde kaydet
             await dbContext.SaveChangesAsync();
-
         }
     }
 }
