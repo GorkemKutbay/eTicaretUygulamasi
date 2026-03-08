@@ -1,0 +1,71 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.CartAddProductViewModel
+
+@{
+    ViewData["Title"] = "Sepete Ürün Ekle";
+}
+
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
+
+    <h3 class="fw-bold text-dark">Sepete Ürün Ekle</h3>
+    <hr class="border-success border-3 opacity-100 mb-4" style="width: 60px;" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm border-0">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (Model != null && Model.ProductName != null)
+    {     
+        <div class="card mb-4 border-0 bg-light">
+            <div class="card-body">
+                <h5 class="card-title text-success fw-bold">@Model.ProductName</h5>
+                <p class="card-text mb-1">
+                    <strong>Fiyat:</strong>
+                    <span class="text-success fw-bold">₺@Model.ProductPrice.ToString("N2")</span>
+                </p>
+                <p class="card-text">
+                    <strong>Kategori:</strong> @Model.CategoryName
+                </p>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <form method="post" asp-action="AddProduct" asp-controller="Cart">
+
+            <input asp-for="ProductId" type="hidden" />
+
+            
+            <input asp-for="ProductName" type="hidden" />
+            <input asp-for="ProductPrice" type="hidden" />
+            <input asp-for="CategoryName" type="hidden" />
+
+            <div class="mb-4">
+                <label asp-for="Quantity" class="form-label fw-bold text-dark">Adet</label>
+                <input asp-for="Quantity" type="number" min="1" max="255"
+                       class="form-control rounded-0 py-2" style="max-width: 150px;" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success fw-bold text-uppercase rounded-0 px-4 py-2">
+                    <i class="fa fa-shopping-cart me-1"></i> Sepete Ekle
+                </button>
+                <a asp-controller="Home" asp-action="Listing"
+                   class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2 ms-2">
+                    Ürünlere Dön
+                </a>
+            </div>
+
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

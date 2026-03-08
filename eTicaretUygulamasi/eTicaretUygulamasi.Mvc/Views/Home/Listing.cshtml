@@ -46,6 +46,10 @@
                                 <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary px-3">
                                     İncele
                                 </a>
+                                <a asp-controller="Cart" asp-action="AddProduct" asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-success px-3 ms-1">
+                                    <i class="fa fa-shopping-cart"></i> Sepete Ekle
+                                </a>
                             </td>
                         </tr>
                     }
