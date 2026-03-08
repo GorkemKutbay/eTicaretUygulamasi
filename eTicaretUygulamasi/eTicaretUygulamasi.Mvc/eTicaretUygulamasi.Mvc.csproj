@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.24" />
+    <Compile Remove="App.Data\**" />
+    <Content Remove="App.Data\**" />
+    <EmbeddedResource Remove="App.Data\**" />
+    <None Remove="App.Data\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App.Data\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.24" />
   </ItemGroup>
 
   <ItemGroup>

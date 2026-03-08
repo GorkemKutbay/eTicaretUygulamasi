@@ -1,0 +1,80 @@
+﻿@using eTicaretUygulamasi.Mvc.App.Data.Entities
+@model IEnumerable<UserEntity>
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Kullanıcılar</h1>
+<p class="mb-4">Sistemde kayıtlı kullanıcıların listesi.</p>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Kullanıcı Listesi</h6>
+        <a href="/users/create" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> Yeni Kullanıcı
+        </a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ad Soyad</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Durum</th>
+                        <th>Kayıt Tarihi</th>
+                        <th width="120">Satıcı İsteği</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- Örnek veri -->
+                    @foreach( var user in Model)
+                    {
+                        <tr>
+
+                            <td>@user.Id</td>
+                            <td>@user.FirstName @user.LastName</td>
+                            <td>@user.Email</td>
+                            <td>@user.Role.Name</td>
+                            <td>
+                                @if (user.Enabled)
+                                {
+                                    <span class="badge badge-success">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Pasif</span>
+                                }
+                            </td>
+                            <td>@user.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td>
+
+                                @if (user.Role.Name == "Buyer")
+                                {
+                                    <a asp-controller="User" asp-action="Approve" asp-route-id="@user.Id" class="btn btn-success btn-sm">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-success btn-sm" disabled>
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                }
+
+                            </td>
+
+
+
+                        </tr>
+
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
