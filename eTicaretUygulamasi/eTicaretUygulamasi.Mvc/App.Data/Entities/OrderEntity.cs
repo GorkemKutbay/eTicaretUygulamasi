@@ -27,5 +27,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
 
         [Required]
         public DateTime CreatedAt { get; set; }
+        public decimal TotalPrice { get; set; }
+        public string Status { get; set; } = string.Empty;
     }
 }

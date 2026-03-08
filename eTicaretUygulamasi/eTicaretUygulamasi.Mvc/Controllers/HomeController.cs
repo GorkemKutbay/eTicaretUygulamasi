@@ -56,7 +56,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             };
 
             return View(viewModel);
-
         }
 
 
