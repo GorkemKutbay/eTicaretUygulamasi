@@ -1,5 +1,7 @@
 using eTicaretUygulamasi.Mvc.App.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,67 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 });
+
+
+
+
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = "eTicaretUygulamasi",
+            ValidateAudience = true,
+            ValidAudience = "eTicaretUygulamasi",
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Cookies["access_token"];
+
+                if (!string.IsNullOrEmpty(accessToken))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            },
+
+            OnChallenge = async context =>
+            {
+                // varsayılan zorlama davranışını engelle
+                context.HandleResponse();
+
+                context.Response.Redirect("/Auth/Login");
+
+                await Task.CompletedTask;
+            },
+
+        };
+
+        options.MapInboundClaims = false;
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
 
 var app = builder.Build();
 
@@ -28,7 +91,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -39,7 +102,7 @@ using (var scope = app.Services.CreateScope())
     using (var dbcontext = scope.ServiceProvider.GetRequiredService<AppDbContext>())
     {
         await dbcontext.Database.EnsureCreatedAsync();
-        
+
     }
 }
 
