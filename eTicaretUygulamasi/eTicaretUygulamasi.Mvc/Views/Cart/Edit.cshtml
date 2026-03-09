@@ -1,0 +1,123 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.CartEditViewModel
+
+@{
+    ViewData["Title"] = "Sepetim";
+}
+
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
+
+    <h3 class="fw-bold text-dark">Sepetim</h3>
+    <hr class="border-success border-3 opacity-100 mb-4" style="width: 60px;" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success shadow-sm border-0">@ViewBag.SuccessMessage</div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm border-0">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (Model == null || Model.Items == null || !Model.Items.Any())
+    {
+        <div class="alert alert-info border-0 shadow-sm">
+            <i class="fa fa-info-circle me-1"></i>
+            Sepetiniz boş.
+            <a asp-controller="Home" asp-action="Listing" class="alert-link">Ürünleri inceleyin</a>.
+        </div>
+    }
+    else
+    {
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <form method="post" asp-action="Edit" asp-controller="Cart">
+
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Ürün</th>
+                        <th style="width: 120px;">Birim Fiyat</th>
+                        <th style="width: 130px;">Adet</th>
+                        <th style="width: 120px;">Toplam</th>
+                        <th style="width: 80px;">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input asp-for="Items[i].Id" type="hidden" />
+                                <input asp-for="Items[i].ProductId" type="hidden" />
+                                <input asp-for="Items[i].ProductName" type="hidden" />
+                                <input asp-for="Items[i].Price" type="hidden" />
+
+                                <span class="fw-bold">@Model.Items[i].ProductName</span>
+                            </td>
+                            <td>
+                                <span class="text-success">₺@Model.Items[i].Price.ToString("N2")</span>
+                            </td>
+                            <td>
+                                <input asp-for="Items[i].Quantity" type="number"
+                                       min="1" max="255"
+                                       class="form-control form-control-sm rounded-0"
+                                       style="width: 80px;" />
+                                <span asp-validation-for="Items[i].Quantity" class="text-danger small"></span>
+                            </td>
+                            <td>
+                                <span class="fw-bold text-dark">
+                                    ₺@((Model.Items[i].Price * Model.Items[i].Quantity).ToString("N2"))
+                                </span>
+                            </td>
+                            <td>
+                                <button type="submit"
+                                        class="btn btn-outline-danger btn-sm rounded-0"
+                                        onclick="return confirm('Bu ürünü sepetten kaldırmak istediğinize emin misiniz?');"
+                                        formaction="@Url.Action("RemoveItem", "Cart")"
+                                        formmethod="post"
+                                        name="id" value="@Model.Items[i].Id">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="table-success">
+                        <td colspan="3" class="text-end fw-bold fs-5">Genel Toplam:</td>
+                        <td colspan="2" class="fw-bold fs-5 text-success">
+                            ₺@Model.TotalPrice.ToString("N2")
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="mt-4 d-flex justify-content-between">
+                <a asp-controller="Home" asp-action="Listing"
+                   class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2">
+                    <i class="fa fa-arrow-left me-1"></i> Alışverişe Devam Et
+                </a>
+                <div>
+                    <button type="submit" class="btn btn-success fw-bold text-uppercase rounded-0 px-4 py-2">
+                        <i class="fa fa-refresh me-1"></i> Sepeti Güncelle
+                    </button>
+                    <a asp-controller="Order" asp-action="Create"
+                       class="btn btn-warning fw-bold text-uppercase rounded-0 px-4 py-2 ms-2">
+                        <i class="fa fa-check me-1"></i> Siparişi Tamamla
+                    </a>
+                </div>
+            </div>
+
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

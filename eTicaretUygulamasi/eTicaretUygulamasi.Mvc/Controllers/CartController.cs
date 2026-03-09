@@ -90,10 +90,101 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         }
 
-
+        [HttpGet]
         public IActionResult Edit()
         {
-            return View();
+            int userId = 1;
+
+            var cartItems = _dbContext.CartItems
+                    .Where(c => c.UserId == userId)
+                    .Include(c => c.Product)
+                    .ThenInclude(p => p.Category)
+                    .ToList();
+            var viewModel = new CartEditViewModel
+            {
+                Items = cartItems.Select(c => new CartEditItemViewModel
+                { 
+                    Id = c.Id,
+                    ProductId = c.ProductId,
+                    ProductName = c.Product.DDName,
+                    Price = c.Product.Price,
+                    Quantity = c.Quantity
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult Edit(CartEditViewModel model)
+        {
+           
+            int userId = 1;
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var item in model.Items)
+                {
+                    var product = _dbContext.Products.FirstOrDefault(p => p.Id == item.ProductId);
+                    if (product != null)
+                    {
+                        item.ProductName = product.DDName;
+                        item.Price = product.Price;
+                    }
+                }
+                return View(model);
+            }
+
+            foreach (var item in model.Items)
+            { 
+                var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == item.Id && c.UserId == userId);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = item.Quantity;
+                }
+            
+            }
+            _dbContext.SaveChanges();
+
+            ViewBag.SuccessMessage = "Sepetiniz güncellendi!";
+
+            var updatedCartItems = _dbContext.CartItems
+                .Include(c => c.Product)
+                .ThenInclude(p => p.Category)
+                .Where(c => c.UserId == userId)
+                .ToList();
+
+            var updatedModel = new CartEditViewModel
+            { 
+             Items = updatedCartItems.Select(c => new CartEditItemViewModel
+             {
+                 Id = c.Id,
+                 ProductId = c.ProductId,
+                 ProductName = c.Product.DDName,
+                 Price = c.Product.Price,
+                 Quantity = c.Quantity
+             }).ToList()
+             };
+            
+            return View(updatedModel);
+        }
+
+
+        [HttpPost]
+        public IActionResult RemoveItem(int id)
+        {
+            int userId = 1;
+
+            var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == id && c.UserId == userId);
+
+            if (cartItem != null)
+            {
+                _dbContext.CartItems.Remove(cartItem);
+                _dbContext.SaveChanges();
+                TempData["SuccessMessage"] = "Ürün sepetten kaldırıldı!";
+            }
+
+            return RedirectToAction("Edit");
+        }        
     }
 }
