@@ -1,0 +1,93 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.OrderCreateViewModel
+
+@{
+    ViewBag.Title = "Siparişi Tamamla";
+}
+
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
+
+    <h3 class="fw-bold text-dark">Siparişi Tamamla</h3>
+    <hr class="border-warning border-3 opacity-100 mb-4" style="width: 80px;" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (Model == null || Model.Items == null || !Model.Items.Any())
+    {
+        <div class="alert alert-info border-0 shadow-sm">
+            <i class="fa fa-info-circle me-1"></i>
+            Sepetiniz boş.
+            <a asp-controller="Home" asp-action="Listing" class="alert-link">Ürünleri inceleyin</a>.
+        </div>
+    }
+    else
+    {
+        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+        <form method="post" asp-action="Create" asp-controller="Order">
+
+            <!-- Sepet Özeti -->
+            <h5 class="fw-bold mb-3">Sepet Özeti</h5>
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Ürün</th>
+                        <th style="width: 120px;">Birim Fiyat</th>
+                        <th style="width: 80px;">Adet</th>
+                        <th style="width: 120px;">Toplam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td><span class="fw-bold">@item.ProductName</span></td>
+                            <td><span class="text-success">₺@item.UnitPrice.ToString("N2")</span></td>
+                            <td>@item.Quantity</td>
+                            <td>
+                                <span class="fw-bold text-dark">
+                                    ₺@((item.UnitPrice * item.Quantity).ToString("N2"))
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr class="table-warning">
+                        <td colspan="3" class="text-end fw-bold fs-5">Genel Toplam:</td>
+                        <td class="fw-bold fs-5 text-success">₺@Model.TotalPrice.ToString("N2")</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Adres Bilgisi -->
+            <div class="mt-4">
+                <h5 class="fw-bold mb-3">Teslimat Adresi</h5>
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label fw-bold">Adres</label>
+                    <textarea asp-for="Address" class="form-control rounded-0" rows="3"
+                              placeholder="Teslimat adresinizi giriniz..."></textarea>
+                    <span asp-validation-for="Address" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <!-- Butonlar -->
+            <div class="mt-4 d-flex justify-content-between">
+                <a asp-controller="Cart" asp-action="Edit"
+                   class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2">
+                    <i class="fa fa-arrow-left me-1"></i> Sepete Dön
+                </a>
+                <button type="submit" class="btn btn-warning fw-bold text-uppercase rounded-0 px-4 py-2">
+                    <i class="fa fa-check me-1"></i> Siparişi Onayla
+                </button>
+            </div>
+
+        </form>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

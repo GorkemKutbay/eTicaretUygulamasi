@@ -1,0 +1,104 @@
+﻿@model eTicaretUygulamasi.Mvc.Models.OrderDetailsViewModel
+
+@{
+    ViewData["Title"] = "Sipariş Detayları";
+}
+
+<div class="container mt-5 mb-5 p-4 bg-white shadow-lg rounded">
+
+    <h3 class="fw-bold text-dark">Sipariş Detayları</h3>
+    <hr class="border-success border-3 opacity-100 mb-4" style="width: 80px;" />
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm border-0">
+            <i class="fa fa-check-circle me-1"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (Model != null && Model.OrderId > 0)
+    {
+        <!-- Sipariş Bilgileri -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <td class="fw-bold text-muted">Sipariş No:</td>
+                        <td>@Model.OrderCode</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-muted">Tarih:</td>
+                        <td>@Model.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-muted">Durum:</td>
+                        <td>
+                            <span class="badge bg-info text-dark">@Model.Status</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tr>
+                        <td class="fw-bold text-muted">Teslimat Adresi:</td>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold text-muted">Toplam Tutar:</td>
+                        <td class="fw-bold text-success fs-5">₺@Model.TotalPrice.ToString("N2")</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sipariş Bilgileri -->
+        <h5 class="fw-bold mb-3">Sipariş Bilgileri</h5>
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Ürün</th>
+                    <th style="width: 120px;">Birim Fiyat</th>
+                    <th style="width: 80px;">Adet</th>
+                    <th style="width: 120px;">Toplam</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td><span class="fw-bold">@item.ProductName</span></td>
+                        <td><span class="text-success">₺@item.UnitPrice.ToString("N2")</span></td>
+                        <td>@item.Quantity</td>
+                        <td>
+                            <span class="fw-bold text-dark">₺@item.LineTotal.ToString("N2")</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="table-success">
+                    <td colspan="3" class="text-end fw-bold fs-5">Genel Toplam:</td>
+                    <td class="fw-bold fs-5 text-success">₺@Model.TotalPrice.ToString("N2")</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Butonlar -->
+        <div class="mt-4 d-flex justify-content-between">
+            <a asp-controller="Profile" asp-action="MyOrders"
+               class="btn btn-light border fw-bold text-uppercase rounded-0 px-4 py-2">
+                <i class="fa fa-list me-1"></i> Siparişlerim
+            </a>
+            <a asp-controller="Home" asp-action="Listing"
+               class="btn btn-success fw-bold text-uppercase rounded-0 px-4 py-2">
+                <i class="fa fa-shopping-bag me-1"></i> Alışverişe Devam Et
+            </a>
+        </div>
+    }
+</div>
