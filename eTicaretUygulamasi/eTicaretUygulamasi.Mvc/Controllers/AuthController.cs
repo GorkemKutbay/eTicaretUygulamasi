@@ -110,11 +110,68 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         public IActionResult Logout()
         {
-            return View();
+            Response.Cookies.Delete("access_token");
+            return RedirectToAction("Login", "Auth");
         }
 
-        public IActionResult ForgotPasword()
+        [HttpGet]
+        public IActionResult ForgotPassword()
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ForgotPassword([FromForm] ForgotPasswordViewModel model)
+        {
+           
+            if (string.IsNullOrWhiteSpace(model.NewPassword))
+            {
+                if (string.IsNullOrEmpty(model.Email))
+                {
+                    ViewBag.ErrorMessage = "Lütfen email adresinizi girin";
+                    return View();
+                }
+
+                var user = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
+
+                if (user is null)
+                {
+                    ViewBag.ErrorMessage = "Bu email adresi ile kayıtlı kullanıcı bulunamadı";
+                    return View();
+                }
+
+                ViewBag.SuccessMessage = "Lütfen yeni şifrenizi girin";
+                ViewBag.EmailVerified = true;
+                return View(model);
+            }
+
+           
+            if (model.NewPassword != model.ConfirmNewPassword)
+            {
+                ViewBag.ErrorMessage = "Şifreler eşleşmiyor";
+                ViewBag.EmailVerified = true;
+                return View(model);
+            }
+
+            if (model.NewPassword.Length < 6)
+            {
+                ViewBag.ErrorMessage = "Şifre en az 6 karakter olmalıdır";
+                ViewBag.EmailVerified = true;
+                return View(model);
+            }
+
+            var updatedUser = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
+
+            if (updatedUser is null)
+            {
+                ViewBag.ErrorMessage = "Bu email adresi ile kayıtlı kullanıcı bulunamadı";
+                return View(model);
+            }
+
+            updatedUser.Password = model.NewPassword;
+            _dbContext.SaveChanges();
+
+            ViewBag.SuccessMessage = "Şifreniz başarıyla güncellendi, giriş yapabilirsiniz";
+
             return View();
         }
     }
