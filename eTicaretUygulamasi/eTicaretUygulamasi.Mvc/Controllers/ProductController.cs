@@ -1,4 +1,5 @@
-﻿using eTicaretUygulamasi.Mvc.App.Data;
+﻿using App.Data;
+using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,23 +9,25 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly AppDbContext _dbContext;
+        
+        private readonly IDataRepository _repo;
 
-        public ProductController(AppDbContext dbContext)
+        public ProductController(IDataRepository repo)
         {
-            _dbContext = dbContext;
+           
+            _repo = repo;
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var categories = _dbContext.Categories.ToList();
+            var categories = await _repo.GetAll<CategoryEntity>();
             ViewBag.Categories = categories;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ProductCreateViewModel model)
+        public async Task<IActionResult> Create(ProductCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -37,21 +40,22 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     SellerId = 1
                 };
 
-                _dbContext.Products.Add(newProduct);
-                _dbContext.SaveChanges();
+                await _repo.Add(newProduct);
+
+                
 
                 TempData["SuccessMessage"] = "Ürün başarıyla eklendi!";
                 return RedirectToAction("Listing", "Home");
             }
-            ViewBag.Categories = _dbContext.Categories.ToList();
+            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
             return View(model);
         }
 
         // Product Edit
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
 
             if (product == null)
             {
@@ -70,20 +74,20 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 SellerId = product.SellerId
             };
 
-            ViewBag.Categories = _dbContext.Categories.ToList();
+            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Edit(ProductEditViewModel viewModel)
+        public async Task<IActionResult> Edit(ProductEditViewModel viewModel)
         {
-            ViewBag.Categories = _dbContext.Categories.ToList();
+            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
 
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
 
-            var existing = _dbContext.Products.FirstOrDefault(p => p.Id == viewModel.Id);
+            var existing =  await _repo.GetByIdWithIncludes<ProductEntity>(viewModel.Id);
 
             if (existing == null)
             {
@@ -97,7 +101,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             existing.StockAmount = viewModel.StockAmount;
             existing.CategoryId = viewModel.CategoryId;
 
-            _dbContext.SaveChanges();
+            await _repo.Update(existing);
+             
 
             ViewBag.SuccessMessage = "Ürün başarıyla güncellendi!";
             return View(viewModel);
@@ -105,11 +110,12 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         // Product Delete
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var product = _dbContext.Products
-                .Include(p => p.Category)
-                .FirstOrDefault(p => p.Id == id);
+            //var product = _dbContext.Products
+            //    .Include(p => p.Category)
+            //    .FirstOrDefault(p => p.Id == id);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category);
 
             if (product == null)
             {
@@ -131,9 +137,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
       
         [HttpPost]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            var product =  await  _repo.GetByIdWithIncludes<ProductEntity>(id);
 
             if (product == null)
             {
@@ -141,21 +147,31 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return View("Delete");
             }
 
-            var comments = _dbContext.ProductComments.Where(c => c.ProductId == id).ToList();
-            _dbContext.ProductComments.RemoveRange(comments);
+            //var comments = _dbContext.ProductComments.Where(c => c.ProductId == id).ToList();
+            //_dbContext.ProductComments.RemoveRange(comments);
+            var comment = await _repo.GetWhere<ProductCommentEntity>(c => c.ProductId == id);
+            await _repo.DeleteRange(comment);
 
-            var images = _dbContext.ProductImages.Where(i => i.ProductId == id).ToList();
-            _dbContext.ProductImages.RemoveRange(images);
+            //var images = _dbContext.ProductImages.Where(i => i.ProductId == id).ToList();
+            //_dbContext.ProductImages.RemoveRange(images);
+            var image = await _repo.GetWhere<ProductImageEntity>(i => i.ProductId == id);
+            await _repo.DeleteRange(image);
 
-            var cartItems = _dbContext.CartItems.Where(c => c.ProductId == id).ToList();
-            _dbContext.CartItems.RemoveRange(cartItems);
+            //var cartItems = _dbContext.CartItems.Where(c => c.ProductId == id).ToList();
+            //_dbContext.CartItems.RemoveRange(cartItems);
+            var cartItem = await _repo.GetWhere<CartItemEntity>(c => c.ProductId == id);
+            await _repo.DeleteRange(cartItem);
 
-            var orderItems = _dbContext.OrderItemS.Where(o => o.ProductId == id).ToList();
-            _dbContext.OrderItemS.RemoveRange(orderItems);
+            //var orderItems = _dbContext.OrderItemS.Where(o => o.ProductId == id).ToList();
+            //_dbContext.OrderItemS.RemoveRange(orderItems);
+            var orderItem = await _repo.GetWhere<OrderItemEntity>(o => o.ProductId == id);
+            await _repo.DeleteRange(orderItem);
+
            
+            
+
             string deletedName = product.DDName;
-            _dbContext.Products.Remove(product);
-            _dbContext.SaveChanges();
+            await _repo.Delete(product);
 
             ViewBag.SuccessMessage = $"'{deletedName}' adlı ürün başarıyla silindi!";
             return View("Delete");
@@ -163,9 +179,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         // Product Comment
         [HttpGet]
-        public IActionResult Comment(int id)
+        public async Task<IActionResult> Comment(int id)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
 
             if (product == null)
             {
@@ -186,9 +202,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         
         [HttpPost]
-        public IActionResult Comment(ProductCommentViewModel viewModel)
+        public async Task<IActionResult> Comment(ProductCommentViewModel viewModel)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == viewModel.ProductId);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(viewModel.ProductId);
             if (product != null)
             {
                 ViewBag.ProductName = product.DDName;
@@ -209,8 +225,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            _dbContext.ProductComments.Add(comment);
-            _dbContext.SaveChanges();
+            await _repo.Add(comment);
 
             ViewBag.SuccessMessage = "Yorumunuz başarıyla gönderildi!";
 

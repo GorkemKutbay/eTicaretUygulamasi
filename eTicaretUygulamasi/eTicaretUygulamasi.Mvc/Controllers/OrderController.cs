@@ -1,4 +1,5 @@
-﻿using eTicaretUygulamasi.Mvc.App.Data;
+﻿using App.Data;
+using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,22 +8,23 @@ using Microsoft.EntityFrameworkCore;
 namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class OrderController : Controller
-    {
-        private readonly AppDbContext _dbContext;
+    {        private readonly IDataRepository _repo;
 
-        public OrderController(AppDbContext dbContext)
+        public OrderController(IDataRepository repo)
         {
-            _dbContext = dbContext;
+            
+            _repo = repo;
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             int userId = 1;
 
-            var cartItems= _dbContext.CartItems
-                .Where(c=> c.UserId == userId)
-                .Include(c => c.Product)
-                .ToList();
+            //var cartItems= _dbContext.CartItems
+            //    .Where(c=> c.UserId == userId)
+            //    .Include(c => c.Product)
+            //    .ToList();
+            var cartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(c => c.UserId == userId, c => c.Product);
 
             if (!cartItems.Any())
             { 
@@ -39,23 +41,27 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 }).ToList()
             };
 
+
+
             return View(viewModel);
         }
 
 
 
         [HttpPost]
-        public IActionResult Create(OrderCreateViewModel model)
+        public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
             int userId = 1;
 
-            var cartItems = _dbContext.CartItems
-                .Where(c => c.UserId == userId)
-                .Include(c => c.Product)
-                .ToList(); 
+            //var cartItems = _dbContext.CartItems
+            //    .Where(c => c.UserId == userId)
+            //    .Include(c => c.Product)
+            //    .ToList(); 
+            var cartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(c => c.UserId == userId, c => c.Product);
             if (!cartItems.Any())
             {
-                ViewBag.ErrorMessage = "Sepetinizde ürün bulunmamaktadır!";
+                //ViewBag.ErrorMessage = "Sepetinizde ürün bulunmamaktadır!";
+                TempData["ErrorMessage"] = "Sepetinizde ürün bulunmamaktadır!";
                 return RedirectToAction("Edit", "Cart");
             }
 
@@ -86,8 +92,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            _dbContext.Orders.Add(order);
-            _dbContext.SaveChanges();
+            //_dbContext.Orders.Add(order);
+            await _repo.Add(order);
 
 
             foreach (var cartItem in cartItems)
@@ -100,11 +106,13 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     UnitPrice = cartItem.Product.Price,
                     CreatedAt = DateTime.UtcNow
                 };
-                _dbContext.OrderItemS.Add(orderItem);
+                //_dbContext.OrderItemS.Add(orderItem);
+                await _repo.Add(orderItem);
             }
 
-            _dbContext.CartItems.RemoveRange(cartItems);
-            _dbContext.SaveChanges();
+            //_dbContext.CartItems.RemoveRange(cartItems);
+            //_dbContext.SaveChanges();
+            await _repo.DeleteRange(cartItems);
 
             TempData["SuccessMessage"] = "Siparişiniz başarıyla oluşturuldu!";
             return RedirectToAction("Details", new { id = order.Id });
@@ -112,12 +120,13 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             int userId = 1;
 
-            var order = _dbContext.Orders
-                .FirstOrDefault(o => o.Id == id && o.UserId == userId);
+            //var order = _dbContext.Orders
+            //    .FirstOrDefault(o => o.Id == id && o.UserId == userId);
+            var order = (await _repo.GetWhere<OrderEntity>(o => o.Id == id && o.UserId == userId)).FirstOrDefault();
 
             if (order == null)
             {
@@ -125,10 +134,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return View();
             }
 
-            var orderItems = _dbContext.OrderItemS
-                .Where(oi => oi.OrderId == order.Id)
-                .Include(oi => oi.Product)
-                .ToList();
+            //var orderItems = _dbContext.OrderItemS
+            //    .Where(oi => oi.OrderId == order.Id)
+            //    .Include(oi => oi.Product)
+            //    .ToList();
+            var orderItems = await _repo.GetWhereWithIncludes<OrderItemEntity>(oi => oi.OrderId == order.Id, oi => oi.Product);
 
             var viewModel = new OrderDetailsViewModel
             {

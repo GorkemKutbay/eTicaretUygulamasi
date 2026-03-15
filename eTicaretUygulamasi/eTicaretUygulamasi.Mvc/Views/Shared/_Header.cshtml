@@ -21,6 +21,7 @@
             </ul>
         </div>
         <div class="header__top__right__auth">
+            @* <a asp-action="Login" asp-controller="Auth"><i class="fa fa-user"></i> Login</a> *@
             @if (User.Identity.IsAuthenticated)
             {
                 <a asp-action="Login" asp-controller="Auth"><i class="fa fa-user"></i> Login</a>
