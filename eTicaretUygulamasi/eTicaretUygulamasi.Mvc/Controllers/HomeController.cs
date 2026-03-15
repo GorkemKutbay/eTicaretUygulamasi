@@ -14,9 +14,18 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             _dbContext = dbContext;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            
+            var products = await _dbContext.Products
+                .Include(p => p.Category)
+                .Where(p => p.Enabled)
+                .OrderByDescending(p => p.CreatedAt)
+                .Take(20) 
+                .ToListAsync();
+            ViewBag.items = TempData["itemCount"] ?? 0;
+
+            return View(products);
         }
 
         public IActionResult AboutUs()
