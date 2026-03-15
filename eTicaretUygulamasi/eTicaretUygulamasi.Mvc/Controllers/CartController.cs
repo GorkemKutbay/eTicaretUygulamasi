@@ -14,6 +14,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             _dbContext = dbContext;
         }
+
         [HttpGet]
         public IActionResult AddProduct(int id)
         {
@@ -100,6 +101,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     .Include(c => c.Product)
                     .ThenInclude(p => p.Category)
                     .ToList();
+            TempData["itemCount"] = cartItems.Count();
             var viewModel = new CartEditViewModel
             {
                 Items = cartItems.Select(c => new CartEditItemViewModel
