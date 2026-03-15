@@ -1,4 +1,6 @@
+using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
+using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,22 +10,27 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AppDbContext _dbContext;
+       
+        private readonly IDataRepository _repo;
 
-        public HomeController(AppDbContext dbContext)
+        public HomeController(IDataRepository repo)
         {
-            _dbContext = dbContext;
+            
+            _repo=repo;
         }
         public async Task<IActionResult> Index()
         {
             
-            var products = await _dbContext.Products
-                .Include(p => p.Category)
-                .Where(p => p.Enabled)
-                .OrderByDescending(p => p.CreatedAt)
-                .Take(20) 
-                .ToListAsync();
-            ViewBag.items = TempData["itemCount"] ?? 0;
+            //var products = await _dbContext.Products
+            //    .Include(p => p.Category)
+            //    .Where(p => p.Enabled)
+            //    .OrderByDescending(p => p.CreatedAt)
+            //    .Take(8) 
+            //    .ToListAsync();
+            var products = await _repo.GetWhereWithIncludes<ProductEntity>(
+                p => p.Enabled,               // Filtre: Sadece aktif ürünler
+                p => p.Category               // İlişki: Kategori bilgilerini de getir
+            );
 
             return View(products);
         }
@@ -38,17 +45,21 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
 
         }
-        public IActionResult Listing()
+        public async Task<IActionResult> Listing()
         {
-            var products = _dbContext.Products.Include(p => p.Category).ToList();
-
+            //var products = _dbContext.Products.Include(p => p.Category).ToList();
+            var products = await _repo.GetWhereWithIncludes<ProductEntity>(
+                p => true,                    // Filtre: Tüm ürünler
+                p => p.Category               // İlişki: Kategori bilgilerini de getir
+            );
             return View(products);
 
         }
-        public IActionResult ProductDetail(int id)
+        public async Task<IActionResult> ProductDetail(int id)
         {
-            var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);
+            //var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);
 
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category, p => p.Seller);
             if (product == null)
             {
                 return NotFound();

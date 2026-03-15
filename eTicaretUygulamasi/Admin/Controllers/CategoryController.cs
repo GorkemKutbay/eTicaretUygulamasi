@@ -1,4 +1,5 @@
 ﻿using Admin.Models;
+using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +8,12 @@ namespace Admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly AppDbContext _dbContext;
 
-        public CategoryController(AppDbContext dbContext)
+        private readonly IDataRepository _repo;
+
+        public CategoryController(IDataRepository repo)
         {
-            _dbContext = dbContext;
+            _repo = repo;
         }
 
 
@@ -23,7 +25,7 @@ namespace Admin.Controllers
 
 
         [HttpPost("/category/create")]
-        public IActionResult Create(CategoryCreateViewModel model)
+        public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -40,10 +42,11 @@ namespace Admin.Controllers
             };
 
 
-            _dbContext.Categories.Add(entity);
+            //_dbContext.Categories.Add(entity);
+            await _repo.Add(entity);
 
 
-            _dbContext.SaveChanges();
+
 
 
             TempData["SuccessMessage"] = "Yeni kategori başarıyla oluşturuldu!";
@@ -54,11 +57,11 @@ namespace Admin.Controllers
 
 
         [HttpGet("/category/edit/{id}")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
 
-            var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
-
+            //var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
             if (entity == null)
             {
 
@@ -79,7 +82,7 @@ namespace Admin.Controllers
 
 
         [HttpPost("/category/edit/{id}")]
-        public IActionResult Edit(int id, CategoryEditViewModel model)
+        public async Task<IActionResult> Edit(int id, CategoryEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +90,8 @@ namespace Admin.Controllers
             }
 
 
-            var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            //var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
 
             if (entity == null)
             {
@@ -100,7 +104,7 @@ namespace Admin.Controllers
             entity.IconCssClass = model.IconCssClass;
 
 
-            _dbContext.SaveChanges();
+            await _repo.Update(entity);
 
             TempData["SuccessMessage"] = "Kategori başarıyla güncellendi!";
 
@@ -108,16 +112,18 @@ namespace Admin.Controllers
             return RedirectToAction("Edit", new { id = entity.Id });
         }
         [HttpGet]
-        public IActionResult ListAllCategory()
+        public async Task<IActionResult> ListAllCategory()
         {
-            ViewBag.Categories = _dbContext.Categories.ToList();
+            //ViewBag.Categories = _dbContext.Categories.ToList();
+            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
             return View();
         }
         [HttpGet]
         [Route("/delete/category/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = _dbContext.Categories.FirstOrDefault(x => x.Id == id);
+            //var category = _dbContext.Categories.FirstOrDefault(x => x.Id == id);
+            var category = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
             if (category == null)
             {
                 return NotFound();
@@ -137,19 +143,16 @@ namespace Admin.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmAsync(int id, bool forceDelete = false)
         {
-            var category = await _dbContext.Categories.FindAsync(id);
+            var category = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            if (category == null) return NotFound();
 
-            if (category == null)
-                return NotFound();
+           
+            var categoryProducts = await _repo.GetWhere<ProductEntity>(p => p.CategoryId == id);
 
-            var hasProducts = _dbContext.Products
-                .Any(p => p.CategoryId == id);
-
-            
-            if (hasProducts && !forceDelete)
+            if (categoryProducts.Any() && !forceDelete)
             {
-                ViewBag.Warning =
-                    "Bu kategoriye ait ürünler var. Silerseniz bağlı ürünler de silinecek.";
+                ViewBag.Warning = "Bu kategoriye ait ürünler var. Silerseniz bağlı ürünler de silinecek.";
+                ViewBag.HasProducts = true;
 
                 var model = new CategoryDeleteViewModel
                 {
@@ -157,25 +160,15 @@ namespace Admin.Controllers
                     CategoryName = category.Name,
                     DateTime = category.CreatedAt
                 };
-
-                ViewBag.HasProducts = true;
-
-                return View(model); 
+                return View(model);
             }
 
-            
-            var products = _dbContext.Products
-                .Where(p => p.CategoryId == id);
+           
+            await _repo.DeleteRange(categoryProducts);
+            await _repo.Delete(category);
 
-            _dbContext.Products.RemoveRange(products);
-            _dbContext.Categories.Remove(category);
-
-            await _dbContext.SaveChangesAsync();
-
-            ViewBag.SuccessMessage =
-                $"{category.Name} ve bağlı ürünler başarıyla silindi.";
-
-            return View(); 
+            ViewBag.SuccessMessage = $"{category.Name} ve bağlı ürünler başarıyla silindi.";
+            return View();
         }
     }
 }

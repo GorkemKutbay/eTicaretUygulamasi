@@ -1,4 +1,5 @@
-﻿using eTicaretUygulamasi.Mvc.App.Data;
+﻿using App.Data;
+using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,21 +9,21 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class CartController : Controller
     {
-        private readonly AppDbContext _dbContext;
+        
+        private readonly IDataRepository _repo;
 
-        public CartController(AppDbContext dbContext)
+        public CartController( IDataRepository repo)
         {
-            _dbContext = dbContext;
+           
+            _repo = repo;
         }
 
         [HttpGet]
-        public IActionResult AddProduct(int id)
+        public async Task<IActionResult> AddProduct(int id)
         {
-            var product = _dbContext.Products
-                .Include(p => p.Category)
-                .FirstOrDefault(p => p.Id == id);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category);
 
-            if (product == null) 
+            if (product == null)
             {
                 ViewBag.ErrorMessage = "Ürün bulunamadı.";
                 return View();
@@ -41,11 +42,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct ( CartAddProductViewModel model)
+        public async Task<IActionResult> AddProduct(CartAddProductViewModel model)
         {
-            var product = _dbContext.Products
-                .Include(p => p.Category)
-                .FirstOrDefault(p => p.Id == model.ProductId);
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(model.ProductId, p => p.Category);
 
             if (product == null)
             {
@@ -56,7 +55,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             model.ProductName = product.DDName;
             model.ProductPrice = product.Price;
             model.CategoryName = product.Category?.Name ?? "Bilinmiyor";
-          
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -64,15 +63,23 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
             int userId = 1;
 
-            var existingCartItem = _dbContext.CartItems
-                .FirstOrDefault(c => c.UserId == userId && c.ProductId == model.ProductId);
+            //var existingCartItem = _dbContext.CartItems
+            //    .FirstOrDefault(c => c.UserId == userId && c.ProductId == model.ProductId);
+
+            var cartItems = await _repo.GetWhere<CartItemEntity>(c => c.UserId == userId && c.ProductId == model.ProductId);
+            var existingCartItem = cartItems.FirstOrDefault();
 
             if (existingCartItem != null)
             {
+
                 existingCartItem.Quantity += model.Quantity;
+
+
+                await _repo.Update(existingCartItem);
             }
             else
             {
+
                 var newCartItem = new CartItemEntity
                 {
                     UserId = userId,
@@ -80,32 +87,38 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     Quantity = model.Quantity,
                     CreatedAt = DateTime.UtcNow
                 };
-                _dbContext.CartItems.Add(newCartItem);               
-
+                await _repo.Add(newCartItem);
             }
-            _dbContext.SaveChanges();
 
-            ViewBag.SuccessMessage = "Ürün sepete eklendi.";
+            TempData["SuccessMessage"] = "Ürün sepete eklendi.";
+
             return RedirectToAction("Edit");
-
 
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit()
         {
             int userId = 1;
 
-            var cartItems = _dbContext.CartItems
-                    .Where(c => c.UserId == userId)
-                    .Include(c => c.Product)
-                    .ThenInclude(p => p.Category)
-                    .ToList();
-            TempData["itemCount"] = cartItems.Count();
+            //var cartItems = _dbContext.CartItems
+            //        .Where(c => c.UserId == userId)
+            //        .Include(c => c.Product)
+            //        .ThenInclude(p => p.Category)
+            //        .ToList();
+
+            var cartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(
+                c => c.UserId == userId,       // Filtre: Sadece bu kullanıcının sepeti
+                c => c.Product,                // İlişki 1: Ürün bilgilerini getir
+                c => c.Product.Category        // İlişki 2: Ürünün kategorisini de getir
+            );
+
+
+            ViewBag.items = cartItems.Count();
             var viewModel = new CartEditViewModel
             {
                 Items = cartItems.Select(c => new CartEditItemViewModel
-                { 
+                {
                     Id = c.Id,
                     ProductId = c.ProductId,
                     ProductName = c.Product.DDName,
@@ -113,22 +126,23 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     Quantity = c.Quantity
                 }).ToList()
             };
-
+            ViewBag.SuccessMessage = TempData["SuccessMessage"];
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(CartEditViewModel model)
+        public async Task<IActionResult> Edit(CartEditViewModel model)
         {
-           
+
             int userId = 1;
 
             if (!ModelState.IsValid)
             {
                 foreach (var item in model.Items)
                 {
-                    var product = _dbContext.Products.FirstOrDefault(p => p.Id == item.ProductId);
-                    if (product != null)
+                    //var product = _dbContext.Products.FirstOrDefault(p => p.Id == item.ProductId);
+                    var product = (await _repo.GetWhere<ProductEntity>(p => p.Id == item.ProductId)).FirstOrDefault();
+                    if (product is not null)
                     {
                         item.ProductName = product.DDName;
                         item.Price = product.Price;
@@ -138,55 +152,61 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             }
 
             foreach (var item in model.Items)
-            { 
-                var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == item.Id && c.UserId == userId);
-                if (cartItem != null)
+            {
+                //var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == item.Id && c.UserId == userId);
+                var cartItem = (await _repo.GetWhere<CartItemEntity>(c => c.Id == item.Id && c.UserId == userId)).FirstOrDefault();
+                if (cartItem is not null)
                 {
                     cartItem.Quantity = item.Quantity;
+                    await _repo.Update(cartItem);
                 }
-            
+
             }
-            _dbContext.SaveChanges();
+            
 
             ViewBag.SuccessMessage = "Sepetiniz güncellendi!";
 
-            var updatedCartItems = _dbContext.CartItems
-                .Include(c => c.Product)
-                .ThenInclude(p => p.Category)
-                .Where(c => c.UserId == userId)
-                .ToList();
-
+            //var updatedCartItems = _dbContext.CartItems
+            //    .Include(c => c.Product)
+            //    .ThenInclude(p => p.Category)
+            //    .Where(c => c.UserId == userId)
+            //    .ToList();
+            var updatedCartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(
+                c => c.UserId == userId,       // Filtre: Sadece bu kullanıcının sepeti
+                c => c.Product,                // İlişki 1: Ürün bilgilerini getir
+                c => c.Product.Category        // İlişki 2: Ürünün kategorisini de getir
+            );
             var updatedModel = new CartEditViewModel
-            { 
-             Items = updatedCartItems.Select(c => new CartEditItemViewModel
-             {
-                 Id = c.Id,
-                 ProductId = c.ProductId,
-                 ProductName = c.Product.DDName,
-                 Price = c.Product.Price,
-                 Quantity = c.Quantity
-             }).ToList()
-             };
-            
+            {
+                Items = updatedCartItems.Select(c => new CartEditItemViewModel
+                {
+                    Id = c.Id,
+                    ProductId = c.ProductId,
+                    ProductName = c.Product.DDName,
+                    Price = c.Product.Price,
+                    Quantity = c.Quantity
+                }).ToList()
+            };
+
             return View(updatedModel);
         }
 
 
         [HttpPost]
-        public IActionResult RemoveItem(int id)
+        public async Task<IActionResult> RemoveItem(int id)
         {
             int userId = 1;
 
-            var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == id && c.UserId == userId);
+            //var cartItem = _dbContext.CartItems.FirstOrDefault(c => c.Id == id && c.UserId == userId);
+            var cartItem = (await _repo.GetWhere<CartItemEntity>(c => c.Id == id && c.UserId == userId)).FirstOrDefault();
 
             if (cartItem != null)
             {
-                _dbContext.CartItems.Remove(cartItem);
-                _dbContext.SaveChanges();
+                await _repo.Delete(cartItem);
                 TempData["SuccessMessage"] = "Ürün sepetten kaldırıldı!";
             }
 
             return RedirectToAction("Edit");
-        }        
+        }
     }
 }

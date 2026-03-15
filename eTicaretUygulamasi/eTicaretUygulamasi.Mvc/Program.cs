@@ -1,3 +1,4 @@
+using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 
+// Program.cs içinde, builder.Build() satırından önce ekle:
 
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

@@ -1,4 +1,5 @@
-﻿using eTicaretUygulamasi.Mvc.App.Data;
+﻿using App.Data;
+using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +12,14 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly AppDbContext _dbContext;
         private readonly IConfiguration _config;
+        private readonly IDataRepository _repo;
 
-        public AuthController(AppDbContext dbContext, IConfiguration config)
+        public AuthController( IConfiguration config, IDataRepository repo)
         {
-            _dbContext = dbContext;
+            
             _config = config;
+            _repo = repo;
         }
         [HttpGet]
         public IActionResult Register()
@@ -26,21 +28,21 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterAsync([FromForm] RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = "Lütfen tüm alanları doldurun";
                 return View();
             }
-            if(registerViewModel.Password != registerViewModel.ConfirmPassword)
+            if (registerViewModel.Password != registerViewModel.ConfirmPassword)
             {
                 ViewBag.ErrorMessage = "Şifreler eşleşmiyor";
                 return View();
             }
-            var dbSet = _dbContext.Set<UserEntity>();
-            var existingUser = dbSet.FirstOrDefault(u => u.Email == registerViewModel.Email);
-            if(existingUser is not null)
+
+            var usersList = await _repo.GetWhere<UserEntity>(u => u.Email == registerViewModel.Email);
+            if (usersList.Any()) 
             {
                 ViewBag.ErrorMessage = "Bu email zaten kayıtlı";
                 return View();
@@ -51,12 +53,12 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 LastName = registerViewModel.LastName,
                 Email = registerViewModel.Email,
                 Password = registerViewModel.Password,
-                RoleId = 3,
+                RoleId = registerViewModel.RoleId,
                 Enabled = true,
                 CreatedAt = DateTime.Now
             };
-            dbSet.Add(newUser);
-            await _dbContext.SaveChangesAsync();
+            await _repo.Add(newUser);
+            
             ViewBag.SuccessMessage = "Kayıt başarılı, giriş yapabilirsiniz";
 
             return View();
@@ -69,15 +71,19 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login([FromForm] LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
             {
                 ViewBag.ErrorMessage = "Lütfen tüm alanları doldurun";
                 return View();
             }
-            var dbSet = _dbContext.Set<UserEntity>();
-            var user = dbSet.FirstOrDefault(u => u.Email == loginViewModel.Email && u.Password == loginViewModel.Password);
+            var users = await _repo.GetAll<UserEntity>();
+
+            var user = users.FirstOrDefault(u =>
+                u.Email == loginViewModel.Email &&
+                u.Password == loginViewModel.Password);
+
             if (user is null)
             {
                 ViewBag.ErrorMessage = "Kullanıcı adı veya şifre hatalı";
@@ -120,9 +126,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult ForgotPassword([FromForm] ForgotPasswordViewModel model)
+        public async Task<IActionResult> ForgotPassword([FromForm] ForgotPasswordViewModel model)
         {
-           
+
             if (string.IsNullOrWhiteSpace(model.NewPassword))
             {
                 if (string.IsNullOrEmpty(model.Email))
@@ -130,8 +136,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     ViewBag.ErrorMessage = "Lütfen email adresinizi girin";
                     return View();
                 }
-
-                var user = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
+                
+                //var user = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
+                var user  = await _repo.GetWhere<UserEntity>(u => u.Email == model.Email);
 
                 if (user is null)
                 {
@@ -144,7 +151,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return View(model);
             }
 
-           
+
             if (model.NewPassword != model.ConfirmNewPassword)
             {
                 ViewBag.ErrorMessage = "Şifreler eşleşmiyor";
@@ -159,8 +166,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return View(model);
             }
 
-            var updatedUser = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
-
+            //var updatedUser = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email);
+            var Users = await _repo.GetWhere<UserEntity>(u => u.Email == model.Email);
+            var updatedUser = Users.FirstOrDefault();
             if (updatedUser is null)
             {
                 ViewBag.ErrorMessage = "Bu email adresi ile kayıtlı kullanıcı bulunamadı";
@@ -168,7 +176,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             }
 
             updatedUser.Password = model.NewPassword;
-            _dbContext.SaveChanges();
+            await _repo.Update(updatedUser);
 
             ViewBag.SuccessMessage = "Şifreniz başarıyla güncellendi, giriş yapabilirsiniz";
 
