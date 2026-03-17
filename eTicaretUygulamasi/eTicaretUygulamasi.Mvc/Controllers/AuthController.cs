@@ -23,14 +23,14 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             _repo = repo;
         }
         [HttpGet]
-        [Authorize("Buyer")]
+        
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize("Buyer")]
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel)
         {
@@ -57,7 +57,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 LastName = registerViewModel.LastName,
                 Email = registerViewModel.Email,
                 Password = registerViewModel.Password,
-                RoleId = registerViewModel.RoleId,
+                RoleId = 3,
                 Enabled = true,
                 CreatedAt = DateTime.Now
             };

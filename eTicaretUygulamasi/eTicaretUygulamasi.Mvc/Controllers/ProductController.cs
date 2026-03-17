@@ -18,7 +18,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         // ============ SELLER ACTIONS ============
 
-        [Authorize(Roles = "seller")]
+        [Authorize(Policy = "seller")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -27,7 +27,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
 
-        [Authorize(Roles = "seller")] 
+        [Authorize(Policy = "seller")] 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductCreateViewModel model)
@@ -53,7 +53,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         // Product Edit
-        [Authorize(Roles = "seller")]
+        [Authorize(Policy = "seller")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -89,7 +89,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "seller")]
+        [Authorize(Policy = "seller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductEditViewModel viewModel)
@@ -130,7 +130,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
        
-        [Authorize(Roles = "seller")] 
+        [Authorize(Policy = "seller")] 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -162,7 +162,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "seller")]
+        [Authorize(Policy = "seller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -206,7 +206,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         // ============ BUYER ACTIONS ============
 
         // Product Comment
-       [Authorize(Roles = "BuyerOrSeller")]
+       [Authorize(Policy = "BuyerOrSeller")]
         [HttpGet]
         public async Task<IActionResult> Comment(int id)
         {
@@ -226,10 +226,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 StarCount = 3
             };
 
+
             return View(viewModel);
         }
 
-        [Authorize(Roles = "BuyerOrSeller")]
+        [Authorize(Policy = "BuyerOrSeller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(ProductCommentViewModel viewModel)

@@ -93,7 +93,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "seller")]
+        [Authorize(Policy = "BuyerOrSeller")]
         public async Task<IActionResult> MyOrders()
         {
             var userId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
@@ -119,7 +119,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize(Roles = "seller")]
+        [Authorize( Policy = "SellerOnly")]
 
         public async Task<IActionResult> MyProducts()
         {
