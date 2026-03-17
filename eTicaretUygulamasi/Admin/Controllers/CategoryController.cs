@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
 {
+    [Authorize(Policy = "Admin")]
     public class CategoryController : Controller
     {
 

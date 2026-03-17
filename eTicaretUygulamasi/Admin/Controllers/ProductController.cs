@@ -2,11 +2,13 @@
 using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Admin.Controllers
 {
+    [Authorize(Policy = "Admin")]
     public class ProductController : Controller
     {
 
