@@ -74,15 +74,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("admin"));
+    options.AddPolicy("SellerOnly", policy =>
+        policy.RequireRole("seller"));
+    options.AddPolicy("BuyerOnly", policy =>
+        policy.RequireRole("buyer"));
 
+    options.AddPolicy("AllRoles", policy =>
+       policy.RequireRole("buyer", "seller", "admin"));  // tum roller
 
-
-
-
-
-
-
-
+    options.AddPolicy("AdminOrSeller", policy =>
+        policy.RequireRole("admin", "seller")); // admin ve seller
+    options.AddPolicy("BuyerOrSeller", policy =>
+       policy.RequireRole("buyer", "seller")); // buyer ve seller
+    options.AddPolicy("BuyerOrAdmin", policy =>
+       policy.RequireRole("buyer", "admin")); // buyer ve admin 
+});
 
 
 var app = builder.Build();

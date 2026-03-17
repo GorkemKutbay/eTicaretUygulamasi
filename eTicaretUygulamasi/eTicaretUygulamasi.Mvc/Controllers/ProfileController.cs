@@ -3,11 +3,12 @@ using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTicaretUygulamasi.Mvc.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController :  BaseController    
     {
        
         private readonly IDataRepository _repo;
@@ -19,10 +20,20 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         }
 
+        [Authorize]
         public async Task<IActionResult> Details()
         {
-            //var user = _dbContext.Users.FirstOrDefault(u => u.Id == 1);
-            var user = await _repo.GetByIdWithIncludes<UserEntity>(1);
+         
+            int userId = GetCurrentUserId();
+
+            if (userId == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+           
+            var user = await _repo.GetByIdWithIncludes<UserEntity>(userId);
+
             if (user == null) return NotFound();
 
             var viewModel = new ProfileDetailsViewModel
@@ -30,14 +41,15 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                Phone = "",
-                Address = ""
+                Phone = user.Phone ?? "Belirtilmemiş",
+                Address = user.Address ?? "Belirtilmemiş"
             };
 
             return View(viewModel);
         }
 
         [HttpGet]
+       
         public async Task<IActionResult> Edit()
         {
             //var user = _dbContext.Users.FirstOrDefault(u => u.Id == 1);
@@ -55,8 +67,10 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
+
+        [HttpPost]       
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Edit(ProfileEditViewModel model)
         {
             if (ModelState.IsValid)
@@ -79,9 +93,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "seller")]
         public async Task<IActionResult> MyOrders()
         {
-            var userId = 1;
+            var userId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
+
             //var orders = _dbContext.Orders
             //    .Where(o => o.UserId == userId)
             //    .Select(o => new MyOrdersViewModel
@@ -102,9 +118,12 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
+
+        [Authorize(Roles = "seller")]
+
         public async Task<IActionResult> MyProducts()
         {
-            var sellerId = 1;
+            var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
             //var products = _dbContext.Products
             //    .Where(p => p.SellerId == sellerId)
             //    .Select(p => new MyProductsViewModel

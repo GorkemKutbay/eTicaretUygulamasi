@@ -2,6 +2,7 @@
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,12 +23,15 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             _repo = repo;
         }
         [HttpGet]
+        [Authorize("Buyer")]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize("Buyer")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
@@ -65,12 +69,16 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous] // Herkes bu sayfayı görebilmeli
         public IActionResult Login()
         {
 
             return View();
         }
+
         [HttpPost]
+        [AllowAnonymous] // Giriş işlemi herkese açık olmalı
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromForm] LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -81,25 +89,26 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             var users = await _repo.GetAll<UserEntity>();
 
             var user = users.FirstOrDefault(u =>
-                u.Email == loginViewModel.Email &&
-                u.Password == loginViewModel.Password);
+            u.Email == loginViewModel.Email &&
+             u.Password == loginViewModel.Password);
 
             if (user is null)
             {
                 ViewBag.ErrorMessage = "Kullanıcı adı veya şifre hatalı";
                 return View();
             }
-            var claims = new List<Claim>()
-            {
-                new Claim (JwtRegisteredClaimNames.Email,user.Email),
-                new Claim (JwtRegisteredClaimNames.Sub,user.Id.ToString())
-            };
 
-            var userRole = await _repo.GetByIdWithIncludes<RoleEntity>(user.RoleId);
-            if (userRole != null)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, userRole.Name));
-            }
+         
+            var roles = await _repo.GetWhere<RoleEntity>(r => r.Id == user.RoleId);
+            user.Role = roles.FirstOrDefault();
+
+            var claims = new List<Claim>()
+            {           
+             new Claim(JwtRegisteredClaimNames.Email, user.Email),
+             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+             new Claim(ClaimTypes.Role, user.Role?.Name ?? "User"), // Artık Role dolu gelecek, ama yine de null kontrolü
+             new Claim(ClaimTypes.Name, user.FirstName)
+            };
 
             var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Secret"]));
             var tokenOptions = new JwtSecurityToken(
@@ -119,7 +128,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
+        
         public IActionResult Logout()
         {
             Response.Cookies.Delete("access_token");

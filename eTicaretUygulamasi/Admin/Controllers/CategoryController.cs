@@ -2,6 +2,7 @@
 using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.Controllers
@@ -111,6 +112,8 @@ namespace Admin.Controllers
 
             return RedirectToAction("Edit", new { id = entity.Id });
         }
+
+        [Authorize(Roles = "AdminOrSeller")]
         [HttpGet]
         public async Task<IActionResult> ListAllCategory()
         {

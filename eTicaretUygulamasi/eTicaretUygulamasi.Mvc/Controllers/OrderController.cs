@@ -2,12 +2,14 @@
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace eTicaretUygulamasi.Mvc.Controllers
 {
-    public class OrderController : Controller
+    [Authorize(Roles = "buyer")]
+    public class OrderController  : BaseController
     {        private readonly IDataRepository _repo;
 
         public OrderController(IDataRepository repo)
@@ -18,7 +20,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            int userId = 1;
+            int userId = GetCurrentUserId();
 
             //var cartItems= _dbContext.CartItems
             //    .Where(c=> c.UserId == userId)
@@ -51,7 +53,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
-            int userId = 1;
+            int userId = GetCurrentUserId();
 
             //var cartItems = _dbContext.CartItems
             //    .Where(c => c.UserId == userId)
@@ -122,7 +124,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            int userId = 1;
+            int userId = GetCurrentUserId();
 
             //var order = _dbContext.Orders
             //    .FirstOrDefault(o => o.Id == id && o.UserId == userId);
