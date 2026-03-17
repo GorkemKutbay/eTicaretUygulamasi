@@ -18,7 +18,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         // ============ SELLER ACTIONS ============
 
-        [Authorize("seller")]
+        [Authorize(Policy = "seller")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -27,7 +27,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
 
-        [Authorize("seller")] 
+        [Authorize(Policy = "seller")] 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductCreateViewModel model)
@@ -130,7 +130,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
        
-        [Authorize("seller")] 
+        [Authorize(Policy = "seller")] 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -225,6 +225,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 ProductId = id,
                 StarCount = 3
             };
+
 
             return View(viewModel);
         }

@@ -112,7 +112,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize(Roles = "seller")]
+        [Authorize( Policy = "SellerOnly")]
 
         public async Task<IActionResult> MyProducts()
         {

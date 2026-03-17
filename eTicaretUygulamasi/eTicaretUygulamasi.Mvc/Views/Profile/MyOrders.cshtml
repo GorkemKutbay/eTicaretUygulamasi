@@ -30,7 +30,7 @@
                         </span>
                     </td>
                     <td>
-                        <a href="/Order/Details/@order.OrderId" class="btn btn-sm btn-info">Detay</a>
+                        <a asp-action="Details" asp-controller="Order" asp-route-id="@order.OrderId" class="btn btn-sm btn-info">Detay</a>
                     </td>
                 </tr>
             }
