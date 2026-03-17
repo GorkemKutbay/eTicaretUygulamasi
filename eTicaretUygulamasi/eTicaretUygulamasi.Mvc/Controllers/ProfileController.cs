@@ -21,7 +21,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
-        [Authorize("AllRoles")]
+        [Authorize("AllRoles")] 
         public async Task<IActionResult> Details()
         {
          
