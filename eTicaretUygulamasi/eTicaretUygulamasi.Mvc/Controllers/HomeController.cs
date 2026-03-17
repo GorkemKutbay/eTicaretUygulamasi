@@ -2,6 +2,7 @@ using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -55,6 +56,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(products);
 
         }
+        [Authorize ("BuyerOrSeller")]
         public async Task<IActionResult> ProductDetail(int id)
         {
             //var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 
 namespace eTicaretUygulamasi.Mvc.App.Data.Entities
 {
@@ -16,6 +17,10 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
         public string LastName { get; set; }
 
         public string Password { get; set; }
+
+        public string Phone { get; set; }
+
+        public string Address { get; set; }
         public int RoleId { get; set; }
         public RoleEntity Role { get; set; }
 
@@ -39,7 +44,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
             builder.HasIndex(e => e.Email).IsUnique();
             builder.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
             builder.Property(e => e.LastName).IsRequired().HasMaxLength(50);
-            builder.Property(e => e.Password).IsRequired();
+            builder.Property(e => e.Password).IsRequired();          
             builder.Property(e => e.RoleId).IsRequired();
             builder.Property(e => e.Enabled).IsRequired().HasDefaultValue(true);
             builder.Property(e => e.CreatedAt).IsRequired();
