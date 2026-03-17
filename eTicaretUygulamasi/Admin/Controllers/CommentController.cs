@@ -1,6 +1,7 @@
 ﻿using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,20 +17,18 @@ namespace Admin.Controllers
             
             _repo = repo;
         }
+        [HttpGet]
+        [Authorize("Admin")]
         public async Task<IActionResult> List()
         {
-            //var comments = _dbcontext.ProductComments
-            //    .Include(x => x.User)
-            //    .Include(x => x.Product)
-            //    .ToList();
             var comments = await _repo.GetWhereWithIncludes<ProductCommentEntity>(x => !x.IsConfirmed, x => x.User, x => x.Product);
 
             return View(comments);
         }
         [HttpPost]
+        [Authorize("Admin")]
         public async Task<IActionResult> Approve(int id)
-        {
-            //var comment = _dbcontext.ProductComments.Find(id);
+        {            
             var comment = await _repo.GetByIdWithIncludes<ProductCommentEntity>(id);
             if (comment == null)
             {
