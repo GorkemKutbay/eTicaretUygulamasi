@@ -20,7 +20,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
 
         public string Phone { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public int RoleId { get; set; }
         public RoleEntity Role { get; set; }
 
