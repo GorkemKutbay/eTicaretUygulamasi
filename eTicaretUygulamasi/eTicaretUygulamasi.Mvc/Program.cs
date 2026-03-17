@@ -35,6 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = "eTicaretUygulamasi",
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            RoleClaimType = System.Security.Claims.ClaimTypes.Role,
 
             IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]))
         };
@@ -60,6 +61,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                 await Task.CompletedTask;
             },
+            OnForbidden = async context =>
+            {
+                context.Response.Redirect("/");
+                await Task.CompletedTask;
+            }
 
         };
 

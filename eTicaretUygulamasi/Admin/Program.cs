@@ -1,3 +1,4 @@
+using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("Default");
     options.UseSqlServer(connectionString);
 });
-
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 var app = builder.Build();
 
 
