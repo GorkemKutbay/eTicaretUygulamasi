@@ -1,4 +1,4 @@
-﻿@model eTicaretUygulamasi.Mvc.Models.ProductDetailViewModel
+@model eTicaretUygulamasi.Mvc.Models.ProductDetailViewModel
 
 
 
@@ -25,11 +25,17 @@
         </div>
         <div class="card-footer text-end">
             <a asp-action="Listing" class="btn btn-outline-primary">Listeye Geri Dön</a>
-            <a asp-controller="Cart" asp-action="AddProduct" asp-route-id="@Model.Id"
-               class="btn btn-success ms-2">
-                <i class="fa fa-shopping-cart me-1"></i> Sepete Ekle
-            </a>
-            <a class="btn btn-info" asp-action="Comment" asp-controller="Product" asp-route-id="@Model.Id">Yorum Ekle</a>
+            @if (User.IsInRole("buyer") || User.IsInRole("seller"))
+            {
+                <a asp-controller="Cart" asp-action="AddProduct" asp-route-id="@Model.Id"
+                   class="btn btn-success ms-2">
+                    <i class="fa fa-shopping-cart me-1"></i> Sepete Ekle
+                </a>
+            }
+            @if (User.IsInRole("buyer") || User.IsInRole("seller"))
+            {
+                <a class="btn btn-info" asp-action="Comment" asp-controller="Product" asp-route-id="@Model.Id">Yorum Ekle</a>
+            }
         </div>
     </div>
 </div>

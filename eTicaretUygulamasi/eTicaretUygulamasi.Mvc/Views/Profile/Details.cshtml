@@ -1,4 +1,4 @@
-﻿@model ProfileDetailsViewModel
+@model ProfileDetailsViewModel
 
 
 @{
@@ -16,7 +16,10 @@
             <i class="fa-solid fa-lock"></i> Admin Paneline Git
         </a>
     }
-    <span><a class="btn btn-success" asp-action="MyProducts" asp-controller="Profile">Ürünlerim</a></span>
+    @if (User.IsInRole("seller"))
+    {
+        <span><a class="btn btn-success" asp-action="MyProducts" asp-controller="Profile">Ürünlerim</a></span>
+    }
     <div class="card-body">
         <dl class="row">
             <dt class="col-sm-3">Adı:</dt>

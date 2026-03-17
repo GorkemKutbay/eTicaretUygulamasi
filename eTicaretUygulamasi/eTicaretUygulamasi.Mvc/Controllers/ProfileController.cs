@@ -1,4 +1,4 @@
-﻿
+
 using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
@@ -52,7 +52,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
-       
+        [Authorize("AllRoles")]
         public async Task<IActionResult> Edit()
         {
             //var user = _dbContext.Users.FirstOrDefault(u => u.Id == 1);
@@ -72,9 +72,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [HttpPost]       
+        [HttpPost]
+        [Authorize("AllRoles")]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> Edit(ProfileEditViewModel model)
         {
             if (ModelState.IsValid)

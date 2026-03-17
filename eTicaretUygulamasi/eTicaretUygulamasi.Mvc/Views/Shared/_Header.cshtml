@@ -1,4 +1,4 @@
-﻿<div class="humberger__menu__overlay"></div>
+<div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
         <a href="#"><img src="img/logo.png" alt=""></a>
@@ -21,9 +21,15 @@
                     <div>Hesabım</div>
                     <span class="arrow_carrot-down"></span>
                     <ul style="width: 150px; padding: 10px; top: 30px;">
-                        <li><a asp-action="MyProducts" asp-controller="Profile"><i class="fa fa-list"></i> Ürünlerim</a></li>
+                        @if (User.IsInRole("seller"))
+                        {
+                            <li><a asp-action="MyProducts" asp-controller="Profile"><i class="fa fa-list"></i> Ürünlerim</a></li>
+                        }
                         <li><a asp-action="Details" asp-controller="Profile"><i class="fa fa-cog"></i> Profilim</a></li>
-                        <li><a asp-action="MyOrders" asp-controller="Profile"><i class="fa fa-cog"></i> Siparişlerim</a></li>
+                        @if (User.IsInRole("buyer") || User.IsInRole("seller"))
+                        {
+                            <li><a asp-action="MyOrders" asp-controller="Profile"><i class="fa fa-cog"></i> Siparişlerim</a></li>
+                        }
                         <li><hr style="margin: 5px 0; border-color: #ebebeb;"></li>
                         <li>
                             <a asp-action="Logout" asp-controller="Auth" style="color: #d9534f;">
@@ -109,9 +115,15 @@
                                     <div>Hesabım</div>
                                     <span class="arrow_carrot-down"></span>
                                     <ul style="width: 150px; padding: 10px; top: 30px;">
-                                        <li><a asp-action="MyProducts" asp-controller="Profile"><i class="fa fa-list"></i> Ürünlerim</a></li>
+                                        @if (User.IsInRole("seller"))
+                                        {
+                                            <li><a asp-action="MyProducts" asp-controller="Profile"><i class="fa fa-list"></i> Ürünlerim</a></li>
+                                        }
                                         <li><a asp-action="Details" asp-controller="Profile" ><i class="fa fa-cog"></i> Profilim</a></li>
-                                        <li><a asp-action="MyOrders" asp-controller="Profile"><i class="fa fa-cog"></i> Siparişlerim</a></li>
+                                        @if (User.IsInRole("buyer") || User.IsInRole("seller"))
+                                        {
+                                            <li><a asp-action="MyOrders" asp-controller="Profile"><i class="fa fa-cog"></i> Siparişlerim</a></li>
+                                        }
 
                                         <li><hr style="margin: 5px 0; border-color: #ebebeb;"></li>
                                         <li>

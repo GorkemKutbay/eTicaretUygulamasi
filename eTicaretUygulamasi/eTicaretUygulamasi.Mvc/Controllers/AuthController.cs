@@ -1,4 +1,4 @@
-﻿using App.Data;
+using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
@@ -23,7 +23,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             _repo = repo;
         }
         [HttpGet]
-        
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
