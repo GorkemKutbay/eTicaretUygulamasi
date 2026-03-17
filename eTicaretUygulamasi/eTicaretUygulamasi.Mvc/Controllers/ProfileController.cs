@@ -20,7 +20,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         }
 
-        [Authorize]
+        [HttpGet]
+        [Authorize("AllRoles")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details()
         {
          
@@ -93,20 +95,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(model);
         }
 
-        [Authorize(Policy = "BuyerOrSeller")]
+        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> MyOrders()
         {
             var userId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
 
-            //var orders = _dbContext.Orders
-            //    .Where(o => o.UserId == userId)
-            //    .Select(o => new MyOrdersViewModel
-            //    {
-            //        OrderId = o.Id,
-            //        OrderDate = o.CreatedAt,
-            //        TotalPrice = o.TotalPrice,
-            //        Status = o.Status
-            //    }).ToList();
             var orders = await _repo.GetWhere<OrderEntity>(o => o.UserId == userId);
             var viewModel = orders.Select(o => new MyOrdersViewModel
             {
@@ -124,15 +117,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         public async Task<IActionResult> MyProducts()
         {
             var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
-            //var products = _dbContext.Products
-            //    .Where(p => p.SellerId == sellerId)
-            //    .Select(p => new MyProductsViewModel
-            //    {
-            //        ProductId = p.Id,
-            //        ProductName = p.DDName,
-            //        Price = p.Price,
-            //        StockQuantity = p.StockAmount
-            //    }).ToList();
+           
             var products = await _repo.GetWhere<ProductEntity>(p => p.SellerId == sellerId);
 
             var viewModel = products

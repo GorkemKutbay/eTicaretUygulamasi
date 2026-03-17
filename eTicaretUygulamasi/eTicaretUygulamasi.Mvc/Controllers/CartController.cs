@@ -2,6 +2,7 @@
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
+        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> AddProduct(int id)
         {
             var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category);
@@ -42,6 +44,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpPost]
+        [Authorize("BuyerOrSeller")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProduct(CartAddProductViewModel model)
         {
             var product = await _repo.GetByIdWithIncludes<ProductEntity>(model.ProductId, p => p.Category);
@@ -97,6 +101,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
+        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> Edit()
         {
             int userId = 1;
@@ -131,6 +136,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpPost]
+        [Authorize("BuyerOrSeller")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CartEditViewModel model)
         {
 
@@ -193,6 +200,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
 
         [HttpPost]
+        [Authorize("BuyerOrSeller")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveItem(int id)
         {
             int userId = 1;

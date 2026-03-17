@@ -53,7 +53,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         // Product Edit
-        [Authorize(Policy = "seller")]
+        [Authorize("seller")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -89,7 +89,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "seller")]
+        [Authorize("seller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ProductEditViewModel viewModel)
@@ -162,7 +162,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "seller")]
+        [Authorize("seller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -206,7 +206,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         // ============ BUYER ACTIONS ============
 
         // Product Comment
-       [Authorize(Policy = "BuyerOrSeller")]
+       [Authorize("BuyerOrSeller")]
         [HttpGet]
         public async Task<IActionResult> Comment(int id)
         {
@@ -230,7 +230,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "BuyerOrSeller")]
+        [Authorize("BuyerOrSeller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Comment(ProductCommentViewModel viewModel)

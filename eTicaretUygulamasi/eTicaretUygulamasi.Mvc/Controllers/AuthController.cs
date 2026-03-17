@@ -128,7 +128,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        
+
+        [Authorize("AllRoles")]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("access_token");

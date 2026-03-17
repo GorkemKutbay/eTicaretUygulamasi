@@ -76,11 +76,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy =>
+    options.AddPolicy("Admin", policy =>
         policy.RequireRole("admin"));
-    options.AddPolicy("SellerOnly", policy =>
+    options.AddPolicy("Seller", policy =>
         policy.RequireRole("seller"));
-    options.AddPolicy("BuyerOnly", policy =>
+    options.AddPolicy("Buyer", policy =>
         policy.RequireRole("buyer"));
 
     options.AddPolicy("AllRoles", policy =>
