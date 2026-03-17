@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿ 
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
 
         public string Password { get; set; }
 
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         public string? Address { get; set; }
         public int RoleId { get; set; }
