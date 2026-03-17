@@ -22,11 +22,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         [HttpGet]
         [Authorize("AllRoles")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Details()
         {
          
             int userId = GetCurrentUserId();
+
 
             if (userId == 0)
             {
@@ -44,7 +44,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Phone = user.Phone ?? "Belirtilmemiş",
-                Address = user.Address ?? "Belirtilmemiş"
+                Address = user.Address ?? "Belirtilmemiş",
+                RoleId = user.RoleId 
             };
 
             return View(viewModel);
@@ -65,6 +66,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 Email = user.Email,
                 Phone = "",
                 Address = ""
+
             };
             return View(viewModel);
         }
@@ -112,7 +114,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize( Policy = "SellerOnly")]
+        [Authorize( Policy = "seller")]
 
         public async Task<IActionResult> MyProducts()
         {
