@@ -37,22 +37,32 @@
                             <td>@comment.Product.DDName</td>
                             <td>@comment.User.FirstName @comment.User.LastName</td>
                             <td>@comment.User.Email</td>
-                            <td>@comment.User.Role</td>
-                            <td>@(comment.IsConfirmed ? "Onaylandı" : "Beklemede")</td>
+                            <td>@comment.User.Role.Name</td>
                             <td>@comment.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td>@(comment.IsConfirmed ? "Onaylandı" : "Beklemede")</td>
+                            
                             <td>
 
                                 @if (!comment.IsConfirmed)
                                 {
-                                    <a asp-controller="Comment" asp-action="Confirm" asp-route-id="@comment.Id" class="btn btn-success btn-sm">
-                                        <i class="fas fa-check"></i>
-                                    </a>
+                                    @* Onaylanmamışsa: Yeşil buton, Tik ikonu ve "Onayla" yazısı *@
+                                    <form asp-controller="Comment" asp-action="Approve" asp-route-id="@comment.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            <i class="fas fa-check"></i> Onayla
+                                        </button>
+                                    </form>
                                 }
                                 else
                                 {
-                                    <button class="btn btn-success btn-sm" disabled>
-                                        <i class="fas fa-check"></i>
-                                    </button>
+                                    @* Onaylanmışsa: Gri (disabled) buton, Çarpı ikonu ve "Pasif Hale Getir" yazısı *@
+                                    @* Not: Eğer bunu gerçekten pasif yapmak için kullanacaksan 'disabled'ı kaldırıp bir form içine almalısın *@
+                                    
+                                    <form asp-controller="Comment" asp-action="UnApproved" asp-route-id="@comment.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-circle-xmark"></i> Pasif Hale Getir
+                                        </button>
+                                    </form>
+                                    
                                 }
 
 

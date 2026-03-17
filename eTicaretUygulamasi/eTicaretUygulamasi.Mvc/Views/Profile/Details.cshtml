@@ -1,5 +1,6 @@
 ﻿@model ProfileDetailsViewModel
 
+
 @{
     ViewData["Title"] = "Profil Detayları";
 }
@@ -8,6 +9,13 @@
     <div class="card-header">
         <h3>Kullanıcı Bilgileri</h3>
     </div>
+    
+    @if (Model.RoleId == 1)
+    {
+        <a href="https://localhost:7220" class="btn btn-danger">
+            <i class="fa-solid fa-lock"></i> Admin Paneline Git
+        </a>
+    }
     <span><a class="btn btn-success" asp-action="MyProducts" asp-controller="Profile">Ürünlerim</a></span>
     <div class="card-body">
         <dl class="row">

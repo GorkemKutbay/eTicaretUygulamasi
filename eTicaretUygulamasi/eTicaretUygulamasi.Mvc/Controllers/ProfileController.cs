@@ -27,6 +27,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
          
             int userId = GetCurrentUserId();
 
+
             if (userId == 0)
             {
                 return RedirectToAction("Login", "Auth");
@@ -43,7 +44,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Phone = user.Phone ?? "Belirtilmemiş",
-                Address = user.Address ?? "Belirtilmemiş"
+                Address = user.Address ?? "Belirtilmemiş",
+                RoleId = user.RoleId 
             };
 
             return View(viewModel);
@@ -64,6 +66,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 Email = user.Email,
                 Phone = "",
                 Address = ""
+
             };
             return View(viewModel);
         }
@@ -111,7 +114,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize(Policy = "Seller")]
+        [Authorize( Policy = "seller")]
+
         public async Task<IActionResult> MyProducts()
         {
             var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
