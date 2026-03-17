@@ -93,8 +93,14 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             {
                 new Claim (JwtRegisteredClaimNames.Email,user.Email),
                 new Claim (JwtRegisteredClaimNames.Sub,user.Id.ToString())
-
             };
+
+            var userRole = await _repo.GetByIdWithIncludes<RoleEntity>(user.RoleId);
+            if (userRole != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, userRole.Name));
+            }
+
             var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Secret"]));
             var tokenOptions = new JwtSecurityToken(
                 issuer: "eTicaretUygulamasi",
