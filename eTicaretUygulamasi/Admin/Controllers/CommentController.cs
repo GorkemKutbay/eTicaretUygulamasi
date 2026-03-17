@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Admin.Controllers
 {
+    [Authorize(Policy = "Admin")]
     public class CommentController : Controller
     {
 
