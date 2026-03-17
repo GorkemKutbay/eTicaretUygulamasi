@@ -19,6 +19,7 @@ namespace Admin.Controllers
 
 
         [HttpGet("/category/create")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -26,6 +27,8 @@ namespace Admin.Controllers
 
 
         [HttpPost("/category/create")]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
             if (!ModelState.IsValid)
