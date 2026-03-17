@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MyProductsViewModel>
+
+<section class="breadcrumb-section set-bg" data-setbg="/ogani/img/breadcrumb.jpg" style="background-image: url('/ogani/img/breadcrumb.jpg');">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Ürünlerim</h2>
+                    <div class="breadcrumb__option">
+                        <a href="/">Anasayfa</a>
+                        <span>Ürün Yönetimi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Ürün Adı</th>
+                                <th>Fiyat</th>
+                                <th>Stok Adedi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <h5>@item.ProductName</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        @item.Price.ToString("C2")
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <span>@item.StockQuantity</span>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="/Product/Edit/@item.ProductId" class="btn btn-sm btn-info text-white"><i class="fa fa-edit"></i></a>
+                                        <a href="/Product/Delete/@item.ProductId" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a href="/Product/Create" class="primary-btn cart-btn">YENİ ÜRÜN EKLE</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

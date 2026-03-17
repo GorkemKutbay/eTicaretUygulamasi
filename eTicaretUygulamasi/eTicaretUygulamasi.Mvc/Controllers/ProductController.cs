@@ -2,6 +2,7 @@
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
         public ProductController(IDataRepository repo)
         {
-           
+
             _repo = repo;
         }
+
+        [Authorize(Roles = "admin, seller")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -25,6 +28,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View();
         }
 
+        [Authorize(Roles = "admin, seller")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductCreateViewModel model)
