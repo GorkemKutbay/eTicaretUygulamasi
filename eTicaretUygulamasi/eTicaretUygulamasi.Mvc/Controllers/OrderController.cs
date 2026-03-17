@@ -122,6 +122,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
 
         [HttpGet]
+        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> Details(int id)
         {
             int userId = GetCurrentUserId();

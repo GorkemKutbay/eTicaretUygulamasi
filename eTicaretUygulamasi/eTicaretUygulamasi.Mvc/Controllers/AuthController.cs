@@ -23,14 +23,12 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             _repo = repo;
         }
         [HttpGet]
-        [Authorize("Buyer")]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize("Buyer")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm] RegisterViewModel registerViewModel)
         {
@@ -128,7 +126,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        
+
+        [Authorize("AllRoles")]
         public IActionResult Logout()
         {
             Response.Cookies.Delete("access_token");
