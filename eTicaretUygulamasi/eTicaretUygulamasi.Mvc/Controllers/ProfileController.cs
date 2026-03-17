@@ -21,8 +21,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
         [HttpGet]
-        [Authorize("AllRoles")]
-        [ValidateAntiForgeryToken]
+        [Authorize("AllRoles")] 
         public async Task<IActionResult> Details()
         {
          
@@ -112,8 +111,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize( Policy = "SellerOnly")]
-
+        [Authorize(Policy = "Seller")]
         public async Task<IActionResult> MyProducts()
         {
             var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
