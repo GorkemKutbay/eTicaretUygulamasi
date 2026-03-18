@@ -16,10 +16,22 @@
             <i class="fa-solid fa-lock"></i> Admin Paneline Git
         </a>
     }
+
     @if (User.IsInRole("seller"))
     {
         <span><a class="btn btn-success" asp-action="MyProducts" asp-controller="Profile">Ürünlerim</a></span>
     }
+
+
+    @if (ViewBag.request == false && Model.RoleId == 3)
+    {
+        <form asp-action="SellerRequest" asp-controller="Profile" asp-route-id="@ViewBag.Id" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-primary">Satıcı Olma İsteğinde bulun</button>
+        </form>
+
+    }
+
+
     <div class="card-body">
         <dl class="row">
             <dt class="col-sm-3">Adı:</dt>

@@ -47,6 +47,31 @@
                                     <td class="shoping__cart__item__close">
                                         <a href="/Product/Edit/@item.ProductId" class="btn btn-sm btn-info text-white"><i class="fa fa-edit"></i></a>
                                         <a href="/Product/Delete/@item.ProductId" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        @if (item.Enabledd == true)
+                                        {
+                                            
+                                            <form method="post" asp-action="Pasive" asp-controller="Product" asp-route-id="@item.ProductId">
+                                                
+                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-check"></i> Pasif Hale Getir
+                                                </button>
+
+                                            </form>
+
+
+                                        }
+                                        else
+                                        {
+                                            <form method="post" asp-action="Active" asp-controller="Product" asp-route-id="@item.ProductId">
+                                                
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-check"></i> Aktif Hale Getir
+                                                </button>
+
+                                            </form>
+                                        }
+
+
                                     </td>
                                 </tr>
                             }
