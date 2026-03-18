@@ -270,5 +270,34 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             };
             return View(freshModel);
         }
+        [Authorize("seller")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Pasive(int id)
+        {
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Enabled = false;
+            await _repo.Update(product);
+            return RedirectToAction("MyProducts","Profile");
+        }
+        [Authorize("seller")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Active(int id)
+        {
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Enabled = true;
+            await _repo.Update(product);
+            return RedirectToAction("MyProducts","Profile");
+        }
+
     }
 }

@@ -14,36 +14,37 @@ namespace Admin.Controllers
         private readonly IDataRepository _repo;
 
         //Listele
-        public UserController(AppDbContext dbContext,IDataRepository repo)
+        public UserController(AppDbContext dbContext, IDataRepository repo)
         {
             _dbcontext = dbContext;
             _repo = repo;
         }
         public async Task<IActionResult> List()
         {
-            //var users = _dbcontext.Users
-            //    .Include(x => x.Role)
-            //    .ToList();
-          
-            var users = await _repo.GetWhereWithIncludes<UserEntity>( u => true,u => u.Role);
+
+
+            var users = await _repo.GetWhereWithIncludes<UserEntity>(u => true, u => u.Role);
 
             return View(users);
 
-            
+
         }
 
-        public async Task<IActionResult> ApproveAsync(int id)
+        public async Task<IActionResult> Approve(int id)
         {
-            //var user = _dbcontext.Users.Find(id);
+
 
             var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            user.RoleId = 2;
+            if (user == null) return NotFound();
+
+            user.RoleId = 2;       // Satıcı rolü (Örn: 2)
+            user.Request = false;  // İstek tamamlandığı için false'a çekiyoruz
+
             await _repo.Update(user);
+
             return RedirectToAction("List");
         }
+
+
     }
 }

@@ -100,5 +100,29 @@ namespace Admin.Controllers
             ViewBag.Products =await _repo.GetAll<ProductEntity>();
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Pasive(int id)
+        {
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Enabled = false;
+            await _repo.Update(product);
+            return RedirectToAction("ListAllProducts");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Active(int id)
+        {
+            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.Enabled = true;
+            await _repo.Update(product);
+            return RedirectToAction("ListAllProducts");
+        }
     }
 }

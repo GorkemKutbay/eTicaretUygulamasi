@@ -29,7 +29,8 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
 
  
         public DateTime CreatedAt { get; set; }
-        
+        public bool Request { get; set; } = false;
+        //public static List<UserEntity> SellerRequests = new List<UserEntity>();
 
 
 

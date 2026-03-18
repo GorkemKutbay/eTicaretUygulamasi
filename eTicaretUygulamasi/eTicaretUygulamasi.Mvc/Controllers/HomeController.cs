@@ -11,30 +11,45 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class HomeController : Controller
     {
-       
+
         private readonly IDataRepository _repo;
 
         public HomeController(IDataRepository repo)
         {
-            
-            _repo=repo;
+
+            _repo = repo;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? categoryId, string searchTerm)
         {
-            
-            //var products = await _dbContext.Products
-            //    .Include(p => p.Category)
-            //    .Where(p => p.Enabled)
-            //    .OrderByDescending(p => p.CreatedAt)
-            //    .Take(8) 
-            //    .ToListAsync();
-            var products = await _repo.GetWhereWithIncludes<ProductEntity>(
-                p => p.Enabled,               // Filtre: Sadece aktif ürünler
-                p => p.Category               // İlişki: Kategori bilgilerini de getir
-            );
+            var products = await _repo.GetWhere<ProductEntity>(x => x.Enabled == true);
+            if (categoryId.HasValue)
+            {
+                products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
+            }
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                searchTerm = searchTerm.ToLower();
+                products = products.Where(p => p.DDName.ToLower().Contains(searchTerm) ||
+                                             (p.Details != null && p.Details.ToLower().Contains(searchTerm)))
+                                   .ToList();
+            }
+            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
+            ViewBag.SelectedCategory = categoryId;
+            ViewBag.SearchTerm = searchTerm;
+
+
+
+
+
+
+            //var products = await _repo.GetWhereWithIncludes<ProductEntity>(
+            //    p => p.Enabled,               // Filtre: Sadece aktif ürünler
+            //    p => p.Category               // İlişki: Kategori bilgilerini de getir
+            //);
 
             return View(products);
         }
+
 
         public IActionResult AboutUs()
         {
@@ -56,7 +71,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             return View(products);
 
         }
-        [Authorize ("BuyerOrSeller")]
+        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> ProductDetail(int id)
         {
             //var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);

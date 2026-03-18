@@ -5,26 +5,27 @@ using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace eTicaretUygulamasi.Mvc.Controllers
 {
-    public class ProfileController :  BaseController    
+    public class ProfileController : BaseController
     {
-       
+
         private readonly IDataRepository _repo;
 
-        public ProfileController( IDataRepository repo)
+        public ProfileController(IDataRepository repo)
         {
-            
+
             _repo = repo;
 
         }
 
         [HttpGet]
-        [Authorize("AllRoles")] 
+        [Authorize("AllRoles")]
         public async Task<IActionResult> Details()
         {
-         
+
             int userId = GetCurrentUserId();
 
 
@@ -33,7 +34,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
-           
+
             var user = await _repo.GetByIdWithIncludes<UserEntity>(userId);
 
             if (user == null) return NotFound();
@@ -45,9 +46,10 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 Email = user.Email,
                 Phone = user.Phone ?? "Belirtilmemiş",
                 Address = user.Address ?? "Belirtilmemiş",
-                RoleId = user.RoleId 
+                RoleId = user.RoleId
             };
-
+            ViewBag.Id = user.Id;
+            ViewBag.request = user.Request;
             return View(viewModel);
         }
 
@@ -114,12 +116,12 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
 
 
-        [Authorize( Policy = "seller")]
+        [Authorize(Policy = "seller")]
 
         public async Task<IActionResult> MyProducts()
         {
             var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
-           
+
             var products = await _repo.GetWhere<ProductEntity>(p => p.SellerId == sellerId);
 
             var viewModel = products
@@ -128,12 +130,32 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                      ProductId = p.Id,
                      ProductName = p.DDName,
                      Price = p.Price,
-                     StockQuantity = p.StockAmount
+                     StockQuantity = p.StockAmount,
+                     Enabledd = p.Enabled
+
                  }).ToList();
 
-
+            
             return View(viewModel);
 
+        }
+
+        [Authorize("buyer")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> SellerRequest(int id)
+        {
+            var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
+
+            if (user == null)
+                return NotFound();
+
+            
+            user.Request = true;
+
+            await _repo.Update(user); 
+
+            return RedirectToAction(nameof(Details));
         }
     }
 }
