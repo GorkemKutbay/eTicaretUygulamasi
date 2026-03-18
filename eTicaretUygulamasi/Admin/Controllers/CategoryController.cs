@@ -20,7 +20,7 @@ namespace Admin.Controllers
 
 
         [HttpGet("/category/create")]
-        [Authorize(Policy = "Admin")]
+        [Authorize("Admin")]
         public IActionResult Create()
         {
             return View();
@@ -28,7 +28,7 @@ namespace Admin.Controllers
 
 
         [HttpPost("/category/create")]
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
@@ -117,7 +117,7 @@ namespace Admin.Controllers
             return RedirectToAction("Edit", new { id = entity.Id });
         }
 
-        [Authorize(Roles = "admin,seller")]
+        [Authorize(Roles = "AdminOrSeller")]
         [HttpGet]
         public async Task<IActionResult> ListAllCategory()
         {

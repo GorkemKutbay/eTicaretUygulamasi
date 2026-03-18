@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eTicaretUygulamasi.Mvc.Controllers
 {
-    [Authorize(Roles = "buyer")]
+    [Authorize ("BuyerOrSeller")]
     public class OrderController  : BaseController
     {        private readonly IDataRepository _repo;
 
@@ -22,10 +22,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             int userId = GetCurrentUserId();
 
-            //var cartItems= _dbContext.CartItems
-            //    .Where(c=> c.UserId == userId)
-            //    .Include(c => c.Product)
-            //    .ToList();
             var cartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(c => c.UserId == userId, c => c.Product);
 
             if (!cartItems.Any())
@@ -55,14 +51,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             int userId = GetCurrentUserId();
 
-            //var cartItems = _dbContext.CartItems
-            //    .Where(c => c.UserId == userId)
-            //    .Include(c => c.Product)
-            //    .ToList(); 
             var cartItems = await _repo.GetWhereWithIncludes<CartItemEntity>(c => c.UserId == userId, c => c.Product);
             if (!cartItems.Any())
             {
-                //ViewBag.ErrorMessage = "Sepetinizde ürün bulunmamaktadır!";
                 TempData["ErrorMessage"] = "Sepetinizde ürün bulunmamaktadır!";
                 return RedirectToAction("Edit", "Cart");
             }
@@ -94,7 +85,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            //_dbContext.Orders.Add(order);
             await _repo.Add(order);
 
 
@@ -108,12 +98,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                     UnitPrice = cartItem.Product.Price,
                     CreatedAt = DateTime.UtcNow
                 };
-                //_dbContext.OrderItemS.Add(orderItem);
                 await _repo.Add(orderItem);
             }
 
-            //_dbContext.CartItems.RemoveRange(cartItems);
-            //_dbContext.SaveChanges();
             await _repo.DeleteRange(cartItems);
 
             TempData["SuccessMessage"] = "Siparişiniz başarıyla oluşturuldu!";
@@ -122,13 +109,10 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
 
         [HttpGet]
-        [Authorize("BuyerOrSeller")]
         public async Task<IActionResult> Details(int id)
         {
             int userId = GetCurrentUserId();
 
-            //var order = _dbContext.Orders
-            //    .FirstOrDefault(o => o.Id == id && o.UserId == userId);
             var order = (await _repo.GetWhere<OrderEntity>(o => o.Id == id && o.UserId == userId)).FirstOrDefault();
 
             if (order == null)
@@ -137,10 +121,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                 return View();
             }
 
-            //var orderItems = _dbContext.OrderItemS
-            //    .Where(oi => oi.OrderId == order.Id)
-            //    .Include(oi => oi.Product)
-            //    .ToList();
             var orderItems = await _repo.GetWhereWithIncludes<OrderItemEntity>(oi => oi.OrderId == order.Id, oi => oi.Product);
 
             var viewModel = new OrderDetailsViewModel

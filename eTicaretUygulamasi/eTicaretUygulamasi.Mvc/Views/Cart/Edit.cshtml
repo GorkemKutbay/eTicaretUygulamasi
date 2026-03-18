@@ -19,10 +19,6 @@
         <div class="alert alert-success shadow-sm border-0">@TempData["SuccessMessage"]</div>
     }
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success shadow-sm border-0">@TempData["SuccessMessage"]</div>
-    }
 
     @if (Model == null || Model.Items == null || !Model.Items.Any())
     {

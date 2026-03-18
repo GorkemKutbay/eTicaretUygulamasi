@@ -25,7 +25,7 @@ namespace eTicaretUygulamasi.Mvc.App.Data.Entities
         public string OrderCode { get; set; }
 
 
-       
+        [Required(ErrorMessage = "Lütfen bir teslimat adresi giriniz.")]
         public string Address { get; set; }
 
 
