@@ -123,6 +123,10 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             existing.StockAmount = viewModel.StockAmount;
             existing.CategoryId = viewModel.CategoryId;
 
+            if (existing.StockAmount == 0)
+            {
+                existing.Enabled = false;
+            }
             await _repo.Update(existing);
 
             ViewBag.SuccessMessage = "Ürün başarıyla güncellendi!";
@@ -293,6 +297,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             if (product == null)
             {
                 return NotFound();
+            }
+            if (product.StockAmount == 0)
+            {
+                TempData["ErrorMessage"] = "Stoğu 0 olan bir ürünü aktif hale getiremezsiniz. Lütfen önce stok ekleyin.";
+                return RedirectToAction("MyProducts", "Profile");
             }
             product.Enabled = true;
             await _repo.Update(product);

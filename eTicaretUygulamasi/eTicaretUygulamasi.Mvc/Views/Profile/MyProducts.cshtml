@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<MyProductsViewModel>
 
+
 <section class="breadcrumb-section set-bg" data-setbg="/ogani/img/breadcrumb.jpg" style="background-image: url('/ogani/img/breadcrumb.jpg');">
     <div class="container">
         <div class="row">
@@ -47,28 +48,27 @@
                                     <td class="shoping__cart__item__close">
                                         <a href="/Product/Edit/@item.ProductId" class="btn btn-sm btn-info text-white"><i class="fa fa-edit"></i></a>
                                         <a href="/Product/Delete/@item.ProductId" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                                        @if (item.Enabledd == true)
+                                        @if (item.Enabledd && item.StockQuantity > 0)
                                         {
-                                            
-                                            <form method="post" asp-action="Pasive" asp-controller="Product" asp-route-id="@item.ProductId">
-                                                
+                                            <form method="post" asp-action="Pasive" asp-controller="Product" asp-route-id="@item.ProductId" style="display:inline;">                                                
                                                 <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-check"></i> Pasif Hale Getir
+                                                    <i class="fas fa-eye-slash"></i> Pasif Hale Getir
                                                 </button>
-
                                             </form>
-
-
                                         }
                                         else
                                         {
-                                            <form method="post" asp-action="Active" asp-controller="Product" asp-route-id="@item.ProductId">
-                                                
+                                            <form method="post" asp-action="Active" asp-controller="Product" asp-route-id="@item.ProductId" style="display:inline;">                                                
                                                 <button type="submit" class="btn btn-success btn-sm">
                                                     <i class="fas fa-check"></i> Aktif Hale Getir
                                                 </button>
+                                                @if (item.StockQuantity == 0)
+                                                    {
+                                                        <br />
 
-                                            </form>
+                                                        <small class="text-danger">Stok yetersiz!</small>
+                                                    }
+                                                </form>                
                                         }
 
 

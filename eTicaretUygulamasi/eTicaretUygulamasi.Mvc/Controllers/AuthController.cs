@@ -106,6 +106,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             {           
              new Claim(JwtRegisteredClaimNames.Email, user.Email),
              new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+
+             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+
              new Claim(ClaimTypes.Role, user.Role?.Name ?? "User"), // Artık Role dolu gelecek, ama yine de null kontrolü
              new Claim(ClaimTypes.Name, user.FirstName)
             };

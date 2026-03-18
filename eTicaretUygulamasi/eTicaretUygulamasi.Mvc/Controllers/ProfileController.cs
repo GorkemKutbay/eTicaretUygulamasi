@@ -104,6 +104,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             var userId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
 
+
             var orders = await _repo.GetWhere<OrderEntity>(o => o.UserId == userId);
             var viewModel = orders.Select(o => new MyOrdersViewModel
             {

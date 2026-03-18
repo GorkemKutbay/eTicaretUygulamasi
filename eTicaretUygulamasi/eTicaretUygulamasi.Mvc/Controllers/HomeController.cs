@@ -21,7 +21,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
         public async Task<IActionResult> Index(int? categoryId, string searchTerm)
         {
-            var products = await _repo.GetWhere<ProductEntity>(x => x.Enabled == true);
+            var products = await _repo.GetWhere<ProductEntity>(x => x.Enabled == true && x.StockAmount > 0);
             if (categoryId.HasValue)
             {
                 products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
