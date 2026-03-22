@@ -11,12 +11,12 @@ namespace Admin.Controllers
     [Authorize(Policy = "Admin")]
     public class ProductController : Controller
     {
+        private readonly IHttpClientFactory _http;
+        private HttpClient Client => _http.CreateClient("data-api");
 
-        private readonly IDataRepository _repo;
-
-        public ProductController( IDataRepository repo)
+        public ProductController(IHttpClientFactory http)
         {
-            _repo = repo;
+            _http = http;
         }
 
         // Delete
@@ -26,7 +26,8 @@ namespace Admin.Controllers
             //var product= _context.Products
             //    .Include(p => p.Category)
             //    .FirstOrDefault(p => p.Id == id);
-            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category);
+            //var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category);
+            var product = await Client.GetFromJsonAsync<ProductEntity>($"/api/product/GetWithCategory/{id}");
 
             if (product == null)
             {
@@ -51,7 +52,8 @@ namespace Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             //var product = _context.Products.FirstOrDefault(p => p.Id == id);
-            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            //var product = await _repo.GetByIdWithIncludes<ProductEntity>(id);
+            var product = await Client.GetFromJsonAsync<ProductEntity>($"/api/product/GetById/{id}");
             if (product == null)
             {
                 ViewBag.ErrorMessage = "Product not found.";
@@ -74,17 +76,23 @@ namespace Admin.Controllers
             string DeletedName = product.DDName;
             //_context.Products.Remove(product);
             //_context.SaveChanges();
-            var comment = await _repo.GetWhere<ProductCommentEntity>(c => c.ProductId == id);
-            await _repo.DeleteRange(comment);
+            //var comment = await _repo.GetWhere<ProductCommentEntity>(c => c.ProductId == id);
+            var comment = await Client.GetFromJsonAsync<List<ProductCommentEntity>>($"api/product/getcommentbyid/{id}");
+            //await _repo.DeleteRange(comment);
+            await Client.DeleteAsync($"api/product/deletecomment/{id}");
 
-            var images = await _repo.GetWhere<ProductImageEntity>(i => i.ProductId == id);
-            await _repo.DeleteRange(images);
+            //var image = await _repo.GetWhere<ProductImageEntity>(i => i.ProductId == id);
+            //await _repo.DeleteRange(image);
+            var image = await Client.GetFromJsonAsync<List<ProductImageEntity>>($"api/product/getimagebyid/{id}");
+            await Client.DeleteAsync($"api/product/deleteimage/{id}");
 
-            var cartItems = await _repo.GetWhere<CartItemEntity>(ci => ci.ProductId == id);
-            await _repo.DeleteRange(cartItems);
-            
-            var orderItems = await _repo.GetWhere<OrderItemEntity>(oi => oi.ProductId == id);
-            await _repo.DeleteRange(orderItems);
+            //var cartItem = await _repo.GetWhere<CartItemEntity>(c => c.ProductId == id);
+            //await _repo.DeleteRange(cartItem);
+            var cartItem = await Client.GetFromJsonAsync<List<CartItemEntity>>($"api/product/getcartitembyid/{id}");
+            await Client.DeleteAsync($"api/product/deletecartitem/{id}");
+
+            //var orderItem = await _repo.GetWhere<OrderItemEntity>(o => o.ProductId == id);
+            //await _repo.DeleteRange(orderItem);
 
 
 

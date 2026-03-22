@@ -29,7 +29,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok(product);
         }
-        [HttpGet("GetById")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
             var product = _context.Products.Find(id);
@@ -46,13 +46,13 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok(product);
         }
-        [HttpGet("GetWithCategory")]
+        [HttpGet("GetWithCategory/{id}")]
         public IActionResult GetWithCategory(int id)
         {
             var product = _context.Products.Where(p => p.Id == id).Include(p => p.Category);
             return product == null ? NotFound() : Ok(product);
         }
-        [HttpGet("GetCommentById")]
+        [HttpGet("GetCommentById/{id}")]
         public IActionResult GetComment(int id)
         {
             var comment = _context.ProductComments.Where(c => c.Id == id);
@@ -66,7 +66,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet("GetImageById")]
+        [HttpGet("GetImageById/{id}")]
         public IActionResult GetImage(int id)
         {
             var image = _context.ProductImages.Where(i => i.Id == id);
@@ -80,7 +80,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet("GetCartItemById")]
+        [HttpGet("GetCartItemById/{id}")]
         public IActionResult GetCartItem(int id)
         {
             var cartItem = _context.CartItems.Where(c => c.Id == id);
@@ -93,7 +93,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet("GetOrderItemById")]
+        [HttpGet("GetOrderItemById/{id}")]
         public IActionResult GetOrderItem(int id)
         {
             var orderItem = _context.OrderItems.Where(o => o.Id == id);
@@ -106,7 +106,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpDelete("DeleteProduct")]
+        [HttpDelete("DeleteProduct/{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = _context.Products.Find(id);
@@ -125,7 +125,7 @@ namespace App.Api.Data.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-        [HttpGet("GetProductsById")]
+        [HttpGet("GetProductsById/{id}")]
         public IActionResult GetProductsById(int id)
         {
             var products = _context.Products.Where(p => p.SellerId == id).ToList();
