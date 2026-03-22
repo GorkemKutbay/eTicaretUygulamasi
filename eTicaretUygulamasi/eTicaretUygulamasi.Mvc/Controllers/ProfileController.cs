@@ -1,5 +1,5 @@
 
-using App.Data;
+
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
@@ -11,14 +11,11 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class ProfileController : BaseController
     {
-
-        private readonly IDataRepository _repo;
-
-        public ProfileController(IDataRepository repo)
+        private readonly IHttpClientFactory _http;
+        private HttpClient Client => _http.CreateClient("ApiClient");
+        public ProfileController(IHttpClientFactory http)
         {
-
-            _repo = repo;
-
+            _http = http;
         }
 
         [HttpGet]
@@ -35,7 +32,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             }
 
 
-            var user = await _repo.GetByIdWithIncludes<UserEntity>(userId);
+            //var user = await _repo.GetByIdWithIncludes<UserEntity>(userId);
+            var user = await Client.GetFromJsonAsync<UserEntity>($"api/Profile/GetUser/{userId}");
 
             if (user == null) return NotFound();
 
@@ -58,8 +56,19 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         public async Task<IActionResult> Edit()
         {
             //var user = _dbContext.Users.FirstOrDefault(u => u.Id == 1);
-            var user = await _repo.GetByIdWithIncludes<UserEntity>(1);
-            if (user == null) return NotFound();
+            int userId = GetCurrentUserId();
+
+
+            if (userId == 0)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+            //var user = await _repo.GetByIdWithIncludes<UserEntity>(userId);
+            var response = await Client.GetAsync($"api/Profile/GetUser/{userId}");
+            var user = await response.Content.ReadFromJsonAsync<UserEntity>();
+
+            if (user == null)
+                return NotFound();
 
             var viewModel = new ProfileEditViewModel
             {
@@ -82,14 +91,17 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             if (ModelState.IsValid)
             {
                 //var user = _dbContext.Users.FirstOrDefault(u => u.Id == 1);
-                var user = await _repo.GetByIdWithIncludes<UserEntity>(1);
+                //var user = await _repo.GetByIdWithIncludes<UserEntity>(GetCurrentUserId());
+                var response = await Client.GetAsync($"api/Profile/GetUser/{GetCurrentUserId()}");
+                var user = await response.Content.ReadFromJsonAsync<UserEntity>();
                 if (user != null)
                 {
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.Email = model.Email;
 
-                    await _repo.Update(user);
+                    //await _repo.Update(user);
+                    await Client.PutAsJsonAsync("api/Profile/UpdateUser", user);
 
 
                     TempData["SuccessMessage"] = "Profil başarıyla güncellendi.";
@@ -105,7 +117,9 @@ namespace eTicaretUygulamasi.Mvc.Controllers
             var userId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
 
 
-            var orders = await _repo.GetWhere<OrderEntity>(o => o.UserId == userId);
+            //var orders = await _repo.GetWhere<OrderEntity>(o => o.UserId == userId);
+            var response = await Client.GetAsync($"api/Orders/GetOrdersByUserId/{userId}");
+            var orders = await response.Content.ReadFromJsonAsync<List<OrderEntity>>();
             var viewModel = orders.Select(o => new MyOrdersViewModel
             {
                 OrderId = o.Id,
@@ -123,7 +137,8 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             var sellerId = GetCurrentUserId(); // Bu metodu, oturum açmış kullanıcının ID'sini almak için uygulamanızın kimlik doğrulama mekanizmasına göre implement edin !!!
 
-            var products = await _repo.GetWhere<ProductEntity>(p => p.SellerId == sellerId);
+            //var products = await _repo.GetWhere<ProductEntity>(p => p.SellerId == sellerId);
+            var products = await Client.GetFromJsonAsync<List<ProductEntity>>($"api/product/GetProductsById/{sellerId}");
 
             var viewModel = products
                  .Select(p => new MyProductsViewModel
@@ -136,7 +151,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
                  }).ToList();
 
-            
+
             return View(viewModel);
 
         }
@@ -146,15 +161,17 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         [HttpPost]
         public async Task<IActionResult> SellerRequest(int id)
         {
-            var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
+            //var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
+            var user = await Client.GetFromJsonAsync<UserEntity>($"api/Profile/GetUser/{id}");
 
             if (user == null)
                 return NotFound();
 
-            
+
             user.Request = true;
 
-            await _repo.Update(user); 
+            //await _repo.Update(user);
+            await Client.PutAsJsonAsync("api/Profile/UpdateUser", user);
 
             return RedirectToAction(nameof(Details));
         }

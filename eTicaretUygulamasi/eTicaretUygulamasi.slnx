@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Admin/Admin.csproj" Id="c5218406-6102-4498-a447-fbef8f5aeb7e" />
+  <Project Path="App.Data.Api/App.Api.Data.csproj" Id="7486529d-ba08-42b3-b46e-21828152bdd7" />
   <Project Path="App.Data/App.Data.csproj" Id="1158e571-9c33-4da1-8e84-04734498efab" />
   <Project Path="eTicaretUygulamasi.Mvc/eTicaretUygulamasi.Mvc.csproj" />
 </Solution>

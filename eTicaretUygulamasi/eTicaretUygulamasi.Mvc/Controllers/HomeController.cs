@@ -1,4 +1,3 @@
-using App.Data;
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;
@@ -11,21 +10,24 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHttpClientFactory _clientFactory;
 
-        private readonly IDataRepository _repo;
-
-        public HomeController(IDataRepository repo)
+        private HttpClient Client => _clientFactory.CreateClient("data-api");
+        public HomeController(IHttpClientFactory clientFactory)
         {
-
-            _repo = repo;
+            _clientFactory = clientFactory;
         }
         public async Task<IActionResult> Index(int? categoryId, string searchTerm)
         {
-            var products = await _repo.GetWhere<ProductEntity>(x => x.Enabled == true && x.StockAmount > 0);
-            if (categoryId.HasValue)
+            
+            var response = await Client.GetAsync("api/home/get");
+            if (!response.IsSuccessStatusCode)
             {
-                products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
+                // Hata durumunu ele al
+                throw new InvalidOperationException(response.StatusCode.ToString());
             }
+            var allProducts = await response.Content.ReadFromJsonAsync<List<ProductEntity>>() ?? throw new InvalidOperationException("No products found");
+            var products = allProducts.Where(x => x.Enabled && x.StockAmount > 0).ToList() ;
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 searchTerm = searchTerm.ToLower();
@@ -33,7 +35,7 @@ namespace eTicaretUygulamasi.Mvc.Controllers
                                              (p.Details != null && p.Details.ToLower().Contains(searchTerm)))
                                    .ToList();
             }
-            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
+            ViewBag.Categories = await Client.GetFromJsonAsync<List<CategoryEntity>>("api/category/get");
             ViewBag.SelectedCategory = categoryId;
             ViewBag.SearchTerm = searchTerm;
 
@@ -42,10 +44,6 @@ namespace eTicaretUygulamasi.Mvc.Controllers
 
 
 
-            //var products = await _repo.GetWhereWithIncludes<ProductEntity>(
-            //    p => p.Enabled,               // Filtre: Sadece aktif ürünler
-            //    p => p.Category               // İlişki: Kategori bilgilerini de getir
-            //);
 
             return View(products);
         }
@@ -63,11 +61,13 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         }
         public async Task<IActionResult> Listing()
         {
-            //var products = _dbContext.Products.Include(p => p.Category).ToList();
-            var products = await _repo.GetWhereWithIncludes<ProductEntity>(
-                p => true,                    // Filtre: Tüm ürünler
-                p => p.Category               // İlişki: Kategori bilgilerini de getir
-            );
+            
+            //var products = await _repo.GetWhereWithIncludes<ProductEntity>(
+            //    p => true,                    // Filtre: Tüm ürünler
+            //    p => p.Category               // İlişki: Kategori bilgilerini de getir
+            //);
+            var products = await Client.GetFromJsonAsync<List<ProductEntity>>("api/home/GetProductsForListing");
+
             return View(products);
 
         }
@@ -76,11 +76,14 @@ namespace eTicaretUygulamasi.Mvc.Controllers
         {
             //var product = _dbContext.Products.Include(p => p.Category).Include(p => p.Seller).FirstOrDefault(p => p.Id == id);
 
-            var product = await _repo.GetByIdWithIncludes<ProductEntity>(id, p => p.Category, p => p.Seller);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var url = $"api/home/getbyid/{id}?includes=Category&includes=Seller";
+
+            var response = await Client.GetAsync(url);
+
+            var product = await response.Content.ReadFromJsonAsync<ProductEntity>();
+
+
+
 
             var viewModel = new ProductDetailViewModel
             {

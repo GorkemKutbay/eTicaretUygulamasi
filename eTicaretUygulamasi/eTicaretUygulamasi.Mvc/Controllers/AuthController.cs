@@ -1,4 +1,4 @@
-using App.Data;
+
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using eTicaretUygulamasi.Mvc.Models;

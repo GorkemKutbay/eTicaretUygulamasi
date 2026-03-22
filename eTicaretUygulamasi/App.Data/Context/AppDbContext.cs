@@ -14,12 +14,13 @@ namespace eTicaretUygulamasi.Mvc.App.Data
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<CartItemEntity> CartItems { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
-        public DbSet<OrderItemEntity> OrderItemS { get; set; }
+        public DbSet<OrderItemEntity> OrderItems { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // ==================== ROLES ====================
