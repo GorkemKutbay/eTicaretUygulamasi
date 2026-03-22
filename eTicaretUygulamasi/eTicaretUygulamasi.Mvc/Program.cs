@@ -1,4 +1,4 @@
-using App.Data;
+
 using eTicaretUygulamasi.Mvc.App.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -8,20 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Default");
-    options.UseSqlServer(connectionString);
 
-
-});
 
 
 
 
 // Program.cs içinde, builder.Build() satırından önce ekle:
+builder.Services.AddHttpClient("data-api", client =>
+{
+    // data-api : HttpClient için bir isim verilmiş olur
 
-builder.Services.AddScoped<IDataRepository, DataRepository>();
+    client.BaseAddress = new Uri("https://localhost:7088");
+    // api host url'si
+});
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -116,13 +116,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-using (var scope = app.Services.CreateScope())
-{
-    using (var dbcontext = scope.ServiceProvider.GetRequiredService<AppDbContext>())
-    {
-        await dbcontext.Database.EnsureCreatedAsync();
 
-    }
-}
 
 app.Run();
