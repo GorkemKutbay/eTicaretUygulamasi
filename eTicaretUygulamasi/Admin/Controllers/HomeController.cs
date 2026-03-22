@@ -10,14 +10,11 @@ namespace Admin.Controllers
     [Authorize(Policy = "Admin")]
     public class HomeController : Controller
     {
-
-
-        private readonly IDataRepository _repo;
-
-        public HomeController(IDataRepository repo)
+        private readonly IHttpClientFactory _http;
+        private HttpClient Client => _http.CreateClient("data-api");
+        public HomeController(IHttpClientFactory http)
         {
-
-            _repo = repo;
+            _http = http;
         }
 
         public async Task<IActionResult> Index()
@@ -28,9 +25,12 @@ namespace Admin.Controllers
                 //CategoryCount = _dbContext.Categories.Count(),
                 //UserCount = _dbContext.Users.Count(),
                 //ProductCount = _dbContext.Products.Count()
-                CategoryCount = await _repo.Count<CategoryEntity>(),
-                UserCount = await _repo.Count<UserEntity>(),
-                ProductCount = await _repo.Count<ProductEntity>()
+                //CategoryCount = await _repo.Count<CategoryEntity>(),
+                CategoryCount = await Client.GetFromJsonAsync<int>("api/home/GetCategoryCount"),
+                //UserCount = await _repo.Count<UserEntity>(),
+                UserCount = await Client.GetFromJsonAsync<int>("api/home/GetUserCount"),
+                //ProductCount = await _repo.Count<ProductEntity>()
+                ProductCount = await Client.GetFromJsonAsync<int>("api/home/GetProductCount")
             };
 
 

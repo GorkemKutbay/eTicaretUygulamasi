@@ -37,7 +37,7 @@ namespace App.Api.Data.Controllers
         public IActionResult GetProductsForListing()
         {
             var products = _dbContext.Products
-                .Include( x => x.Category)
+                .Include(x => x.Category)
                 .ToList();
 
             return Ok(products);
@@ -69,6 +69,26 @@ namespace App.Api.Data.Controllers
 
             return Ok(product);
         }
+        [HttpGet("GetCategoryCount")]
+        public IActionResult GetCategoryCount()
+        {
+            var count = _dbContext.Categories.Count();
+            return Ok(count);
 
+        }
+        [HttpGet("GetUserCount")]
+        public IActionResult GetUserCount()
+        {
+            var count = _dbContext.Users.Count();
+            return Ok(count);
+
+        }
+        [HttpGet("GetProductCount")]
+        public IActionResult GetProductCount()
+        {
+            var count = _dbContext.Products.Count();
+            return Ok(count);
+
+        }
     }
 }

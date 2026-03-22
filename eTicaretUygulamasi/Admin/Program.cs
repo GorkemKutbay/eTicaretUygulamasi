@@ -1,4 +1,4 @@
-using App.Data;
+
 using eTicaretUygulamasi.Mvc.App.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +56,14 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", policy => policy.RequireRole("admin"));
     options.AddPolicy("Seller", policy => policy.RequireRole("seller"));
     options.AddPolicy("Buyer", policy => policy.RequireRole("buyer"));
+});
+
+builder.Services.AddHttpClient("data-api", client =>
+{
+    // data-api : HttpClient için bir isim verilmiş olur
+
+    client.BaseAddress = new Uri("https://localhost:7088");
+    // api host url'si
 });
 
 var app = builder.Build();

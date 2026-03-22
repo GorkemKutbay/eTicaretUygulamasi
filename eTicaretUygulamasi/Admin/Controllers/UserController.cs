@@ -10,20 +10,18 @@ namespace Admin.Controllers
     [Authorize(Policy = "Admin")]
     public class UserController : Controller
     {
-        private readonly AppDbContext _dbcontext;
-        private readonly IDataRepository _repo;
-
-        //Listele
-        public UserController(AppDbContext dbContext, IDataRepository repo)
+        private readonly IHttpClientFactory _http;
+        private HttpClient Client => _http.CreateClient("data-api");
+        public UserController(IHttpClientFactory http)
         {
-            _dbcontext = dbContext;
-            _repo = repo;
+            _http = http;
         }
         public async Task<IActionResult> List()
         {
 
 
-            var users = await _repo.GetWhereWithIncludes<UserEntity>(u => true, u => u.Role);
+            //var users = await _repo.GetWhereWithIncludes<UserEntity>(u => true, u => u.Role);
+
 
             return View(users);
 
@@ -34,13 +32,15 @@ namespace Admin.Controllers
         {
 
 
-            var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
+            //var user = await _repo.GetByIdWithIncludes<UserEntity>(id);
+            var user = await Client.GetFromJsonAsync<UserEntity>($"/api/user/GetUserById/{id}");
             if (user == null) return NotFound();
 
             user.RoleId = 2;       // Satıcı rolü (Örn: 2)
             user.Request = false;  // İstek tamamlandığı için false'a çekiyoruz
 
-            await _repo.Update(user);
+            //await _repo.Update(user);
+            await Client.PutAsJsonAsync($"/api/user/UpdateUserRole", user);
 
             return RedirectToAction("List");
         }

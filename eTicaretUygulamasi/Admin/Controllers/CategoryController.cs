@@ -1,5 +1,5 @@
 ﻿using Admin.Models;
-using App.Data;
+
 using eTicaretUygulamasi.Mvc.App.Data;
 using eTicaretUygulamasi.Mvc.App.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +10,11 @@ namespace Admin.Controllers
     [Authorize(Policy = "Admin")]
     public class CategoryController : Controller
     {
-
-        private readonly IDataRepository _repo;
-
-        public CategoryController(IDataRepository repo)
+        private readonly IHttpClientFactory _http;
+        private HttpClient Client => _http.CreateClient("data-api");
+        public CategoryController(IHttpClientFactory http)
         {
-            _repo = repo;
+            _http = http;
         }
 
 
@@ -48,7 +47,9 @@ namespace Admin.Controllers
 
 
             //_dbContext.Categories.Add(entity);
-            await _repo.Add(entity);
+            await Client.PostAsJsonAsync("/api/category/CreateCategory", entity);
+            //await _repo.Add(entity);
+
 
 
 
@@ -66,7 +67,10 @@ namespace Admin.Controllers
         {
 
             //var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
-            var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            //var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            var entity = await Client.GetFromJsonAsync<CategoryEntity>($"/api/category/GetCategoryById/{id}");
+            //var entity = await Client.GetFromJsonAsync<CategoryEntity>($"/api/category/GetCategoryById?id={id}");
+
             if (entity == null)
             {
 
@@ -96,7 +100,8 @@ namespace Admin.Controllers
 
 
             //var entity = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
-            var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            //var entity = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            var entity = await Client.GetFromJsonAsync<CategoryEntity>($"/api/category/GetCategoryById/{id}");
 
             if (entity == null)
             {
@@ -109,7 +114,8 @@ namespace Admin.Controllers
             entity.IconCssClass = model.IconCssClass;
 
 
-            await _repo.Update(entity);
+            //await _repo.Update(entity);
+            await Client.PutAsJsonAsync("/api/category/UpdateCategory", entity);
 
             TempData["SuccessMessage"] = "Kategori başarıyla güncellendi!";
 
@@ -122,7 +128,7 @@ namespace Admin.Controllers
         public async Task<IActionResult> ListAllCategory()
         {
             //ViewBag.Categories = _dbContext.Categories.ToList();
-            ViewBag.Categories = await _repo.GetAll<CategoryEntity>();
+            ViewBag.Categories = await Client.GetFromJsonAsync<List<CategoryEntity>>("/api/category/GetAllCategories");
             return View();
         }
         [HttpGet]
@@ -130,7 +136,8 @@ namespace Admin.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             //var category = _dbContext.Categories.FirstOrDefault(x => x.Id == id);
-            var category = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            //var category = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            var category = await Client.GetFromJsonAsync<CategoryEntity>($"/api/category/GetCategoryById/{id}");
             if (category == null)
             {
                 return NotFound();
@@ -150,11 +157,12 @@ namespace Admin.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmAsync(int id, bool forceDelete = false)
         {
-            var category = await _repo.GetByIdWithIncludes<CategoryEntity>(id);
+            var category = await Client.GetFromJsonAsync<CategoryEntity>($"/api/category/GetCategoryById/{id}");
             if (category == null) return NotFound();
 
-           
-            var categoryProducts = await _repo.GetWhere<ProductEntity>(p => p.CategoryId == id);
+
+            //var categoryProducts = await _repo.GetWhere<ProductEntity>(p => p.CategoryId == id);
+            var categoryProducts = await Client.GetFromJsonAsync<List<ProductEntity>>($"/api/category/GetCategoryProducts/{id}");
 
             if (categoryProducts.Any() && !forceDelete)
             {
@@ -170,9 +178,11 @@ namespace Admin.Controllers
                 return View(model);
             }
 
-           
-            await _repo.DeleteRange(categoryProducts);
-            await _repo.Delete(category);
+
+            //await _repo.DeleteRange(categoryProducts);
+            await Client.DeleteAsync($"/api/category/DeleteCategoryProducts/{id}");
+            //await _repo.Delete(category);
+            await Client.DeleteAsync($"/api/category/DeleteCategory/{id}");
 
             ViewBag.SuccessMessage = $"{category.Name} ve bağlı ürünler başarıyla silindi.";
             return View();
