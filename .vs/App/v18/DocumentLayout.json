@@ -1,0 +1,184 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.api.data\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|solutionrelative:app.api.data\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\dataextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\dataextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DD03A73-359C-4175-BDC9-E77BE470AE04}|App.Eticaret\\App.Eticaret.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.eticaret\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DD03A73-359C-4175-BDC9-E77BE470AE04}|App.Eticaret\\App.Eticaret.csproj|solutionrelative:app.eticaret\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\infrastructure\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\infrastructure\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 1191,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{9842f08a-884d-4136-9922-43d2b83db7c2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3822e751-eb69-4b0e-b301-595a9e4c74d5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Api.Data\\Program.cs",
+              "RelativeDocumentMoniker": "App.Api.Data\\Program.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Api.Data\\Program.cs",
+              "RelativeToolTip": "App.Api.Data\\Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T12:04:25.945Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Eticaret\\Program.cs",
+              "RelativeDocumentMoniker": "App.Eticaret\\Program.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Eticaret\\Program.cs",
+              "RelativeToolTip": "App.Eticaret\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T12:04:17.281Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DataExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\DataExtensions.cs",
+              "RelativeDocumentMoniker": "App.Data\\DataExtensions.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\DataExtensions.cs",
+              "RelativeToolTip": "App.Data\\DataExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T11:59:17.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DataRepository.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\DataRepository.cs",
+              "RelativeDocumentMoniker": "App.Data\\Infrastructure\\DataRepository.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\DataRepository.cs",
+              "RelativeToolTip": "App.Data\\Infrastructure\\DataRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T09:02:39.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserEntity.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Entities\\UserEntity.cs",
+              "RelativeDocumentMoniker": "App.Data\\Entities\\UserEntity.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Entities\\UserEntity.cs",
+              "RelativeToolTip": "App.Data\\Entities\\UserEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T08:45:11.162Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "RelativeToolTip": "App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T07:07:08.725Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1191,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 304,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
