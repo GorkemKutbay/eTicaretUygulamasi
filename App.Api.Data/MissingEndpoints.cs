@@ -39,6 +39,63 @@ public static class MissingEndpoints
             return Results.Ok(data);
         });
 
+        app.MapGet("api/v1/products", async (IDataRepository repo) =>
+        {
+            var data = await repo.GetAll<ProductEntity>()
+                .Where(p => p.Enabled)
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    CategoryName = p.Category.Name,
+                    DiscountPercentage = p.Discount == null ? (byte?)null : p.Discount.DiscountRate,
+                    ImageUrl = p.Images.Select(i => i.Url).FirstOrDefault()
+                })
+                .ToListAsync();
+            return Results.Ok(data);
+        });
+
+        app.MapGet("api/v1/products/{id:int}/home", async (int id, IDataRepository repo) =>
+        {
+            var product = await repo.GetAll<ProductEntity>()
+                .Include(p => p.Category)
+                .Include(p => p.Seller)
+                .Include(p => p.Discount)
+                .Include(p => p.Images)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(p => p.Enabled && p.Id == id);
+
+            if (product == null)
+            {
+                return Results.NotFound();
+            }
+
+            var data = new
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                DiscountRate = product.Discount == null ? (byte?)null : product.Discount.DiscountRate,
+                Description = product.Description,
+                StockAmount = product.StockAmount,
+                SellerName = $"{product.Seller.FirstName} {product.Seller.LastName}",
+                CategoryName = product.Category.Name,
+                CategoryId = product.CategoryId,
+                ImageUrls = product.Images.Select(i => i.Url).ToArray(),
+                Reviews = product.Comments.Select(c => new
+                {
+                    Id = c.Id,
+                    Text = c.Text,
+                    StarCount = c.StarCount,
+                    UserName = $"{c.User.FirstName} {c.User.LastName}"
+                }).ToArray()
+            };
+
+            return Results.Ok(data);
+        });
+
         app.MapGet("api/v1/blogs", async (int take, IDataRepository repo) =>
         {
             var data = await repo.GetAll<BlogEntity>()
