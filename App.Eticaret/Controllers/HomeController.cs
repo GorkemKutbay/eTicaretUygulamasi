@@ -58,7 +58,7 @@ namespace App.Eticaret.Controllers
         {
             // TODO: add paging support
 
-            var response = await Client.GetAsync("/products");
+            var response = await Client.GetAsync("products");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -73,7 +73,7 @@ namespace App.Eticaret.Controllers
         [HttpGet("/product/{productId:int}/details")]
         public async Task<IActionResult> ProductDetail([FromRoute] int productId)
         {
-            var response = await Client.GetAsync($"/products/{productId}/home");
+            var response = await Client.GetAsync($"products/{productId}/home");
 
             if (!response.IsSuccessStatusCode)
             {

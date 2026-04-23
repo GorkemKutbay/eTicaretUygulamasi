@@ -1,3 +1,4 @@
+using App.Api.Data;
 using App.Api.Data.Services;
 using App.Data;
 using IdentityModel;
@@ -55,6 +56,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapMissingEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {
