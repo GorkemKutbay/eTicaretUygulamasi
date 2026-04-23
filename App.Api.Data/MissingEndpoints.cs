@@ -90,8 +90,7 @@ public static class MissingEndpoints
                     Text = c.Text,
                     StarCount = c.StarCount,
                     UserName = $"{c.User.FirstName} {c.User.LastName}"
-                }).ToArray(),
-                IsInCart = false
+                }).ToArray()
             };
 
             return Results.Ok(data);
