@@ -1,4 +1,4 @@
-﻿using App.Models.DTO.Mail;
+using App.Models.DTO.Mail;
 using App.Services.Abstract;
 using Ardalis.Result;
 using System.Net;
@@ -81,9 +81,15 @@ namespace App.Services.Concrete
                 }
             }
 
-            await client.SendMailAsync(email);
-
-            return Result.Success();
+            try
+            {
+                await client.SendMailAsync(email);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Error($"Mail gönderilemedi: {ex.Message}");
+            }
         }
     }
 }

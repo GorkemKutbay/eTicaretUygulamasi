@@ -1,8 +1,9 @@
-﻿using App.Eticaret.Models.ViewModels;
+using App.Eticaret.Models.ViewModels;
 using App.Models.DTO.Cart;
 using App.Models.DTO.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace App.Eticaret.Controllers
 {
@@ -21,7 +22,8 @@ namespace App.Eticaret.Controllers
                 return RedirectToAction(nameof(AuthController.Login), "Auth");
             }
 
-            var response = await Client.GetAsync($"/products/{productId}");
+            // Ürünün var olup olmadığını kontrol et
+            var response = await Client.GetAsync($"products/{productId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -35,31 +37,40 @@ namespace App.Eticaret.Controllers
                 return NotFound();
             }
 
-            response = await Client.GetAsync($"/user/{userId}/cart/?productId={productId}");
+            // Sepette bu ürün var mı kontrol et
+            response = await Client.GetAsync($"user/{userId}/cart?productId={productId}");
 
             if (response.IsSuccessStatusCode)
             {
+                // Ürün sepette var — miktarı artır
                 var cartItem = await response.Content.ReadFromJsonAsync<CartGetResult>();
 
                 if (cartItem is not null)
                 {
                     cartItem.Quantity++;
-                }
-                else
-                {
-                    cartItem = new CartGetResult
-                    {
-                        UserId = userId.Value,
-                        ProductId = productId,
-                        Quantity = 1
-                    };
-
-                    response = await Client.PostAsJsonAsync("/user/cart", cartItem);
+                    response = await Client.PutAsJsonAsync($"user/{userId}/cart/{cartItem.Id}", cartItem);
 
                     if (!response.IsSuccessStatusCode)
                     {
                         return BadRequest();
                     }
+                }
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                // Ürün sepette yok — yeni ekle
+                var newCartItem = new CartGetResult
+                {
+                    UserId = userId.Value,
+                    ProductId = productId,
+                    Quantity = 1
+                };
+
+                response = await Client.PostAsJsonAsync("user/cart", newCartItem);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return BadRequest();
                 }
             }
             else
@@ -102,7 +113,7 @@ namespace App.Eticaret.Controllers
                 return RedirectToAction(nameof(AuthController.Login), "Auth");
             }
 
-            var response = await Client.GetAsync($"/user/{userId}/cart/{cartItemId}");
+            var response = await Client.GetAsync($"user/{userId}/cart/{cartItemId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -116,7 +127,7 @@ namespace App.Eticaret.Controllers
                 return NotFound();
             }
 
-            response = await Client.DeleteAsync($"/user/{userId}/cart/{cartItemId}");
+            response = await Client.DeleteAsync($"user/{userId}/cart/{cartItemId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -136,7 +147,7 @@ namespace App.Eticaret.Controllers
                 return RedirectToAction(nameof(AuthController.Login), "Auth");
             }
 
-            var response = await Client.GetAsync($"/user/{userId}/cart/{cartItemId}");
+            var response = await Client.GetAsync($"user/{userId}/cart/{cartItemId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -152,7 +163,7 @@ namespace App.Eticaret.Controllers
 
             cartItem.Quantity = quantity;
 
-            response = await Client.PutAsJsonAsync($"/user/{userId}/cart/{cartItemId}", cartItem);
+            response = await Client.PutAsJsonAsync($"user/{userId}/cart/{cartItemId}", cartItem);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -190,7 +201,7 @@ namespace App.Eticaret.Controllers
         {
             var userId = GetUserId() ?? -1;
 
-            var response = await Client.GetAsync($"/user/{userId}/cart");
+            var response = await Client.GetAsync($"user/{userId}/cart");
 
             if (!response.IsSuccessStatusCode)
             {

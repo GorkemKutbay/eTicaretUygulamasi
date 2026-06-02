@@ -9,7 +9,7 @@ namespace App.Eticaret.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var response = await Client.GetAsync("categories");
+            var response = await Client.GetAsync("category");
 
             if (!response.IsSuccessStatusCode)
             {

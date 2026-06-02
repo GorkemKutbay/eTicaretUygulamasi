@@ -38,11 +38,14 @@ namespace App.Api.Data.Services
 
             user.ResetPasswordToken = Guid.NewGuid().ToString("n");
 
+            var frontendBaseUrl = Configuration["AppUrls:Frontend"] ?? "https://localhost:7114";
+            var resetPasswordUrl = $"{frontendBaseUrl.TrimEnd('/')}/renew-password/{user.ResetPasswordToken}";
+
             var mailRequest = new MailSendRequest
             {
                 To = [user.Email],
                 Subject = "Şifre Sıfırlama",
-                Body = $"Merhaba {user.FirstName}, <br> Şifrenizi sıfırlamak için <a href='https://localhost:5001/renew-password/{user.ResetPasswordToken}'>tıklayınız</a>.",
+                Body = $"Merhaba {user.FirstName}, <br> Şifrenizi sıfırlamak için <a href='{resetPasswordUrl}'>tıklayınız</a>.",
                 IsHtml = true
             };
 

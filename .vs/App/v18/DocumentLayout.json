@@ -1,29 +1,33 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\",
+  "WorkspaceRootPath": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.api.data\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.api.data\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|solutionrelative:app.api.data\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.api.data\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1CA1A6AB-C61C-431E-BF7E-5B18A89CF0F1}|App.Api.Data\\App.Api.Data.csproj|solutionrelative:app.api.data\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\dataextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.data\\dataextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\dataextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5DD03A73-359C-4175-BDC9-E77BE470AE04}|App.Eticaret\\App.Eticaret.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.eticaret\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5DD03A73-359C-4175-BDC9-E77BE470AE04}|App.Eticaret\\App.Eticaret.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.eticaret\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5DD03A73-359C-4175-BDC9-E77BE470AE04}|App.Eticaret\\App.Eticaret.csproj|solutionrelative:app.eticaret\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\infrastructure\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.data\\infrastructure\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\infrastructure\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.data\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\entities\\userentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\downloads\\gorev-16-cozum\\app\\app.data\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|c:\\users\\kutba\\desktop\\eticaretuygulamas-\\app.data\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3EA49FE7-A8D7-420C-9ED4-B76A28ADA63F}|App.Data\\App.Data.csproj|solutionrelative:app.data\\infrastructure\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -34,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 1191,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -47,6 +51,10 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
             {
               "$type": "Bookmark",
@@ -83,62 +91,71 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Api.Data\\Program.cs",
-              "RelativeDocumentMoniker": "App.Api.Data\\Program.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Api.Data\\Program.cs",
-              "RelativeToolTip": "App.Api.Data\\Program.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T12:04:25.945Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Eticaret\\Program.cs",
-              "RelativeDocumentMoniker": "App.Eticaret\\Program.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Eticaret\\Program.cs",
-              "RelativeToolTip": "App.Eticaret\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T12:04:17.281Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Api.Data\\appsettings.json",
+              "RelativeDocumentMoniker": "App.Api.Data\\appsettings.json",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Api.Data\\appsettings.json",
+              "RelativeToolTip": "App.Api.Data\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-02T13:27:01.838Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DataExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\DataExtensions.cs",
-              "RelativeDocumentMoniker": "App.Data\\DataExtensions.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\DataExtensions.cs",
-              "RelativeToolTip": "App.Data\\DataExtensions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAA3AAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Api.Data\\Program.cs",
+              "RelativeDocumentMoniker": "App.Api.Data\\Program.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Api.Data\\Program.cs",
+              "RelativeToolTip": "App.Api.Data\\Program.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAEEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T11:59:17.544Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T12:04:25.945Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DataRepository.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\DataRepository.cs",
-              "RelativeDocumentMoniker": "App.Data\\Infrastructure\\DataRepository.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\DataRepository.cs",
-              "RelativeToolTip": "App.Data\\Infrastructure\\DataRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Eticaret\\Program.cs",
+              "RelativeDocumentMoniker": "App.Eticaret\\Program.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Eticaret\\Program.cs",
+              "RelativeToolTip": "App.Eticaret\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T09:02:39.471Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-13T12:04:17.281Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DataExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\DataExtensions.cs",
+              "RelativeDocumentMoniker": "App.Data\\DataExtensions.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\DataExtensions.cs",
+              "RelativeToolTip": "App.Data\\DataExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T11:59:17.544Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "DataRepository.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Infrastructure\\DataRepository.cs",
+              "RelativeDocumentMoniker": "App.Data\\Infrastructure\\DataRepository.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Infrastructure\\DataRepository.cs",
+              "RelativeToolTip": "App.Data\\Infrastructure\\DataRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T09:02:39.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "UserEntity.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Entities\\UserEntity.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Entities\\UserEntity.cs",
               "RelativeDocumentMoniker": "App.Data\\Entities\\UserEntity.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Entities\\UserEntity.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Entities\\UserEntity.cs",
               "RelativeToolTip": "App.Data\\Entities\\UserEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -146,11 +163,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "App.Data\\Infrastructure\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\kutba\\Downloads\\Gorev-16-Cozum\\App\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\kutba\\Desktop\\eTicaretUygulamas-\\App.Data\\Infrastructure\\ApplicationDbContext.cs",
               "RelativeToolTip": "App.Data\\Infrastructure\\ApplicationDbContext.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

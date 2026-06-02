@@ -1,5 +1,6 @@
 using App.Data.Entities;
 using App.Data.Infrastructure;
+using App.Models.DTO.Cart;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +33,7 @@ public static class MissingEndpoints
                     Name = p.Name,
                     Price = p.Price,
                     CategoryName = p.Category.Name,
-                    DiscountPercentage = p.Discount == null ? (decimal?)null : p.Discount.DiscountRate,
+                    DiscountPercentage = p.Discount == null ? (byte?)null : p.Discount.DiscountRate,
                     ImageUrl = p.Images.Count != 0 ? p.Images.First().Url : null
                 })
                 .ToListAsync();
@@ -124,7 +125,7 @@ public static class MissingEndpoints
                     Name = p.Name,
                     Price = p.Price,
                     CategoryName = p.Category.Name,
-                    DiscountPercentage = p.Discount == null ? (decimal?)null : p.Discount.DiscountRate,
+                    DiscountPercentage = p.Discount == null ? (byte?)null : p.Discount.DiscountRate,
                     ImageUrl = p.Images.Count != 0 ? p.Images.First().Url : null
                 })
                 .ToListAsync();
@@ -142,7 +143,7 @@ public static class MissingEndpoints
                     Name = p.Name,
                     Price = p.Price,
                     CategoryName = p.Category.Name,
-                    DiscountPercentage = p.Discount == null ? (decimal?)null : p.Discount.DiscountRate,
+                    DiscountPercentage = p.Discount == null ? (byte?)null : p.Discount.DiscountRate,
                     ImageUrl = p.Images.Count != 0 ? p.Images.First().Url : null
                 })
                 .ToListAsync();
@@ -160,7 +161,7 @@ public static class MissingEndpoints
                     Name = p.Name,
                     Price = p.Price,
                     CategoryName = p.Category.Name,
-                    DiscountPercentage = p.Discount == null ? (decimal?)null : p.Discount.DiscountRate,
+                    DiscountPercentage = p.Discount == null ? (byte?)null : p.Discount.DiscountRate,
                     ImageUrl = p.Images.Count != 0 ? p.Images.First().Url : null
                 })
                 .ToListAsync();
@@ -218,6 +219,112 @@ public static class MissingEndpoints
             c.ProductId = id;
             await repo.AddAsync(c);
             return Results.Ok(c);
+        });
+
+        // Single product for cart
+        app.MapGet("api/v1/products/{id:int}", async (int id, IDataRepository repo) =>
+        {
+            var product = await repo.GetAll<ProductEntity>()
+                .Where(p => p.Id == id)
+                .Select(p => new
+                {
+                    Id = p.Id,
+                    SellerId = p.SellerId,
+                    CategoryId = p.CategoryId,
+                    DiscountId = p.DiscountId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Description = p.Description,
+                    StockAmount = p.StockAmount,
+                    Enabled = p.Enabled
+                })
+                .FirstOrDefaultAsync();
+            return product == null ? Results.NotFound() : Results.Ok(product);
+        });
+
+        // Cart endpoints
+        app.MapGet("api/v1/user/{userId:int}/cart", async (int userId, int? productId, IDataRepository repo) =>
+        {
+            if (productId.HasValue)
+            {
+                var item = await repo.GetAll<CartItemEntity>()
+                    .Where(c => c.UserId == userId && c.ProductId == productId.Value)
+                    .Select(c => new CartGetResult
+                    {
+                        Id = c.Id,
+                        UserId = c.UserId,
+                        ProductId = c.ProductId,
+                        Quantity = c.Quantity,
+                        Price = c.Product.Price,
+                        ProductName = c.Product.Name,
+                        ProductImages = c.Product.Images.Select(i => i.Url).ToArray()
+                    })
+                    .FirstOrDefaultAsync();
+                return item == null ? Results.NotFound() : Results.Ok(item);
+            }
+
+            var items = await repo.GetAll<CartItemEntity>()
+                .Where(c => c.UserId == userId)
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    ProductName = c.Product.Name,
+                    ProductImage = c.Product.Images.Select(i => i.Url).FirstOrDefault(),
+                    Quantity = c.Quantity,
+                    Price = c.Product.Price
+                })
+                .ToListAsync();
+            return Results.Ok(items);
+        });
+
+        app.MapGet("api/v1/user/{userId:int}/cart/{cartItemId:int}", async (int userId, int cartItemId, IDataRepository repo) =>
+        {
+            var item = await repo.GetAll<CartItemEntity>()
+                .Where(c => c.Id == cartItemId && c.UserId == userId)
+                .Select(c => new CartGetResult
+                {
+                    Id = c.Id,
+                    UserId = c.UserId,
+                    ProductId = c.ProductId,
+                    Quantity = c.Quantity,
+                    Price = c.Product.Price,
+                    ProductName = c.Product.Name,
+                    ProductImages = c.Product.Images.Select(i => i.Url).ToArray()
+                })
+                .FirstOrDefaultAsync();
+            return item == null ? Results.NotFound() : Results.Ok(item);
+        });
+
+        app.MapPost("api/v1/user/cart", async ([FromBody] CartGetResult cartItem, IDataRepository repo) =>
+        {
+            var entity = new CartItemEntity
+            {
+                UserId = cartItem.UserId,
+                ProductId = cartItem.ProductId,
+                Quantity = cartItem.Quantity
+            };
+            await repo.AddAsync(entity);
+            cartItem.Id = entity.Id;
+            return Results.Ok(cartItem);
+        });
+
+        app.MapPut("api/v1/user/{userId:int}/cart/{cartItemId:int}", async (int userId, int cartItemId, [FromBody] CartGetResult cartItem, IDataRepository repo) =>
+        {
+            var entity = await repo.GetAll<CartItemEntity>()
+                .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == userId);
+            if (entity == null) return Results.NotFound();
+            entity.Quantity = cartItem.Quantity;
+            await repo.UpdateAsync(entity);
+            return Results.Ok(cartItem);
+        });
+
+        app.MapDelete("api/v1/user/{userId:int}/cart/{cartItemId:int}", async (int userId, int cartItemId, IDataRepository repo) =>
+        {
+            var entity = await repo.GetAll<CartItemEntity>()
+                .FirstOrDefaultAsync(c => c.Id == cartItemId && c.UserId == userId);
+            if (entity == null) return Results.NotFound();
+            await repo.DeleteAsync<CartItemEntity>(cartItemId);
+            return Results.Ok();
         });
     }
 }
